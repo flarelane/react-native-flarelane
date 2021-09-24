@@ -1,17 +1,17 @@
-# react-native-flare-lane
+# react-native-flarelane
 
-react-native-flare-lane
+react-native-flarelane
 
 ## Installation
 
 ```sh
-npm install react-native-flare-lane
+npm install react-native-flarelane
 ```
 
 ## Usage
 
 ```js
-import FlareLane from "react-native-flare-lane";
+import FlareLane from "react-native-flarelane";
 
 // ...
 

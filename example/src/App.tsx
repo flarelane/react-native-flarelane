@@ -1,7 +1,7 @@
 import * as React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import FlareLane from 'react-native-flarelane';
 
-import { StyleSheet, View, Text } from 'react-native';
-import FlareLane from 'react-native-flare-lane';
 
 export default function App() {
   const [result, setResult] = React.useState<number | undefined>();

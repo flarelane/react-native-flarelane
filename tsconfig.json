@@ -2,7 +2,7 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "react-native-flare-lane": ["./src/index"]
+      "react-native-flarelane": ["./src/index"]
     },
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,

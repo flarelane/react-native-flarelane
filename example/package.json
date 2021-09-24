@@ -1,6 +1,6 @@
 {
-  "name": "react-native-flare-lane-example",
-  "description": "Example app for react-native-flare-lane",
+  "name": "react-native-flarelane-example",
+  "description": "Example app for react-native-flarelane",
   "version": "0.0.1",
   "private": true,
   "scripts": {

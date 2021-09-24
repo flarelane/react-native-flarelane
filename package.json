@@ -1,7 +1,7 @@
 {
-  "name": "react-native-flare-lane",
+  "name": "react-native-flarelane",
   "version": "0.1.0",
-  "description": "react-native-flare-lane",
+  "description": "react-native-flarelane",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
   "types": "lib/typescript/index.d.ts",
@@ -13,7 +13,7 @@
     "android",
     "ios",
     "cpp",
-    "react-native-flare-lane.podspec",
+    "react-native-flarelane.podspec",
     "!lib/typescript/example",
     "!android/build",
     "!ios/build",
@@ -36,13 +36,13 @@
     "ios",
     "android"
   ],
-  "repository": "https://github.com/flarelane/react-native-flare-lane",
+  "repository": "https://github.com/flarelane/react-native-flarelane",
   "author": "FlareLabs <admin@flarelane.com> (https://github.com/flarelane)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/flarelane/react-native-flare-lane/issues"
+    "url": "https://github.com/flarelane/react-native-flarelane/issues"
   },
-  "homepage": "https://github.com/flarelane/react-native-flare-lane#readme",
+  "homepage": "https://github.com/flarelane/react-native-flarelane#readme",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
