@@ -3,23 +3,24 @@ import { Button, StyleSheet, Text, View } from 'react-native';
 import FlareLane from 'react-native-flarelane';
 import type { Notification } from 'src/types';
 
+const tags = { age: 27, gender: 'men' };
+
 export default function App() {
   const [text, setText] = React.useState<Notification>();
   const [isSetUserId, setIsSetUserId] = React.useState<boolean>(false);
   const [isSubscribed, setIsSubscribed] = React.useState<boolean>(false);
-  const [tags, setTags] = React.useState<Record<string, unknown>>();
   const [isSetTags, setIsSetTags] = React.useState<boolean>(false);
 
   React.useEffect(() => {
+    // Initialize by setting logLevel and projectId.
     FlareLane.setLogLevel('verbose');
-    FlareLane.initialize('df156155-6ec8-4f87-8b74-f27b75a0699b');
-    // Event
+    FlareLane.initialize('a6135350-a4a4-44ca-abba-4bc09931d889');
+
+    // Executes a handler with notification data when notification is converted.
     FlareLane.setNotificationConvertedHandler((payload) => {
-      console.log('callback called!', payload);
-      setText(payload);
+      // Do something...
+      setText(payload); // Example code
     });
-    // Device data
-    setTags({ age: 88 });
   }, []);
 
   const toggleUserId = () => {
@@ -33,14 +34,11 @@ export default function App() {
   };
 
   const toggleTags = () => {
-    if (!tags) return;
-
     if (!isSetTags) {
       FlareLane.setTags(tags);
       setIsSetTags(true);
     } else {
-      let keys = Object.keys(tags);
-      FlareLane.deleteTags(keys);
+      FlareLane.deleteTags(Object.keys(tags));
       setIsSetTags(false);
     }
   };
