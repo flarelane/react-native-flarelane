@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 
-		5E555C0D2413F4C50049A1A2 /* FlareLane.m in Sources */ = {isa = PBXBuildFile; fileRef = B3E7B5891CC2AC0600A0062D /* FlareLane.m */; };
-		F4FF95D7245B92E800C19C63 /*  FlareLane.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4FF95D6245B92E800C19C63 /*  FlareLane.swift */; };
+		5E555C0D2413F4C50049A1A2 /* RCTFlareLane.m in Sources */ = {isa = PBXBuildFile; fileRef = B3E7B5891CC2AC0600A0062D /* RCTFlareLane.m */; };
+		F4FF95D7245B92E800C19C63 /*  RCTFlareLane.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4FF95D6245B92E800C19C63 /*  RCTFlareLane.swift */; };
 
 /* End PBXBuildFile section */
 
@@ -26,11 +26,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		134814201AA4EA6300B7C361 /* libFlareLane.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libFlareLane.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		134814201AA4EA6300B7C361 /* libRCTFlareLane.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRCTFlareLane.a; sourceTree = BUILT_PRODUCTS_DIR; };
 
-		B3E7B5891CC2AC0600A0062D /* FlareLane.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlareLane.m; sourceTree = "<group>"; };
-		F4FF95D5245B92E700C19C63 /* FlareLane-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "FlareLane-Bridging-Header.h"; sourceTree = "<group>"; };
-		F4FF95D6245B92E800C19C63 /* FlareLane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlareLane.swift; sourceTree = "<group>"; };
+		B3E7B5891CC2AC0600A0062D /* RCTFlareLane.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCTFlareLane.m; sourceTree = "<group>"; };
+		F4FF95D5245B92E700C19C63 /* RCTFlareLane-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RCTFlareLane-Bridging-Header.h"; sourceTree = "<group>"; };
+		F4FF95D6245B92E800C19C63 /* RCTFlareLane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RCTFlareLane.swift; sourceTree = "<group>"; };
 
 /* End PBXFileReference section */
 
@@ -48,7 +48,7 @@
 		134814211AA4EA7D00B7C361 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				134814201AA4EA6300B7C361 /* libFlareLane.a */,
+				134814201AA4EA6300B7C361 /* libRCTFlareLane.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -57,9 +57,9 @@
 			isa = PBXGroup;
 			children = (
 
-				F4FF95D6245B92E800C19C63 /* FlareLane.swift */,
-				B3E7B5891CC2AC0600A0062D /* FlareLane.m */,
-				F4FF95D5245B92E700C19C63 /* FlareLane-Bridging-Header.h */,
+				F4FF95D6245B92E800C19C63 /* RCTFlareLane.swift */,
+				B3E7B5891CC2AC0600A0062D /* RCTFlareLane.m */,
+				F4FF95D5245B92E700C19C63 /* RCTFlareLane-Bridging-Header.h */,
 
 				134814211AA4EA7D00B7C361 /* Products */,
 			);
@@ -82,7 +82,7 @@
 			);
 			name = FlareLane;
 			productName = RCTDataManager;
-			productReference = 134814201AA4EA6300B7C361 /* libFlareLane.a */;
+			productReference = 134814201AA4EA6300B7C361 /* libRCTFlareLane.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -123,8 +123,8 @@
 			buildActionMask = 2147483647;
 			files = (
 
-				F4FF95D7245B92E800C19C63 /* FlareLane.swift in Sources */,
-				B3E7B58A1CC2AC0600A0062D /* FlareLane.m in Sources */,
+				F4FF95D7245B92E800C19C63 /* RCTFlareLane.swift in Sources */,
+				B3E7B58A1CC2AC0600A0062D /* RCTFlareLane.m in Sources */,
 
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -239,7 +239,7 @@
 				PRODUCT_NAME = FlareLane;
 				SKIP_INSTALL = YES;
 
-				SWIFT_OBJC_BRIDGING_HEADER = "FlareLane-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "RCTFlareLane-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 
@@ -260,7 +260,7 @@
 				PRODUCT_NAME = FlareLane;
 				SKIP_INSTALL = YES;
 
-				SWIFT_OBJC_BRIDGING_HEADER = "FlareLane-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "RCTFlareLane-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 
 			};
