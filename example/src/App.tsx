@@ -14,7 +14,7 @@ export default function App() {
   React.useEffect(() => {
     // Initialize by setting logLevel and projectId.
     FlareLane.setLogLevel('verbose');
-    FlareLane.initialize('a6135350-a4a4-44ca-abba-4bc09931d889');
+    FlareLane.initialize('INPUT_YOUR_PROJECT_ID');
 
     // Executes a handler with notification data when notification is converted.
     FlareLane.setNotificationConvertedHandler((payload) => {
