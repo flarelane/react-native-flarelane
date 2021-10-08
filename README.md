@@ -1,26 +1,12 @@
 # react-native-flarelane
 
-react-native-flarelane
+Welcome to [FlareLane](https://flarelane.com)!
 
 ## Installation
 
 ```sh
-npm install react-native-flarelane
+npm install @flarelane/react-native-sdk
 ```
-
-## Usage
-
-```js
-import FlareLane from "react-native-flarelane";
-
-// ...
-
-const result = await FlareLane.multiply(3, 7);
-```
-
-## Contributing
-
-See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the repository and the development workflow.
 
 ## License
 
