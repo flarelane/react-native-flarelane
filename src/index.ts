@@ -16,16 +16,16 @@ import {
   publicMethodErrorHandler,
 } from './utils';
 
-const { FlareLane } = NativeModules as {
+const { FlareLane: FlareLaneNativeModule } = NativeModules as {
   FlareLane: FlareLaneType;
 };
 
-if (!FlareLane)
+if (!FlareLaneNativeModule)
   throw 'FlareLane - Cannot find FlareLane module. Please check pod install or gradle sync.';
 
-const eventManager = new FlareLaneEventManager(FlareLane);
+const eventManager = new FlareLaneEventManager(FlareLaneNativeModule);
 
-class FlareLaneWrapper {
+class FlareLane {
   // ----- PUBLIC METHOD -----
 
   static setLogLevel(logLevel: LogLevel) {
@@ -33,7 +33,7 @@ class FlareLaneWrapper {
 
     try {
       console.log(`FlareLane - Set log level [${logLevel}]`);
-      FlareLane.setLogLevel(convertLogLevel(logLevel));
+      FlareLaneNativeModule.setLogLevel(convertLogLevel(logLevel));
     } catch (error: any) {
       publicMethodErrorHandler(error, this.name);
     }
@@ -44,7 +44,7 @@ class FlareLaneWrapper {
 
     try {
       console.log(`FlareLane - Initiallize with project id. [${projectId}]`);
-      FlareLane.initialize(projectId);
+      FlareLaneNativeModule.initialize(projectId);
     } catch (error: any) {
       publicMethodErrorHandler(error, this.name);
     }
@@ -72,7 +72,7 @@ class FlareLaneWrapper {
 
     try {
       console.log(`FlareLane - Set user id`);
-      FlareLane.setUserId(userId);
+      FlareLaneNativeModule.setUserId(userId);
     } catch (error: any) {
       publicMethodErrorHandler(error, this.name);
     }
@@ -83,7 +83,7 @@ class FlareLaneWrapper {
 
     try {
       console.log(`FlareLane - Set tags`);
-      FlareLane.setTags(tags);
+      FlareLaneNativeModule.setTags(tags);
     } catch (error: any) {
       publicMethodErrorHandler(error, this.name);
     }
@@ -94,7 +94,7 @@ class FlareLaneWrapper {
 
     try {
       console.log(`FlareLane - Delete tags`);
-      FlareLane.deleteTags(keys);
+      FlareLaneNativeModule.deleteTags(keys);
     } catch (error: any) {
       publicMethodErrorHandler(error, this.name);
     }
@@ -105,11 +105,11 @@ class FlareLaneWrapper {
 
     try {
       console.log(`FlareLane - Set is subscribed`);
-      FlareLane.setIsSubscribed(isSubscribed);
+      FlareLaneNativeModule.setIsSubscribed(isSubscribed);
     } catch (error: any) {
       publicMethodErrorHandler(error, this.name);
     }
   }
 }
 
-export default FlareLaneWrapper;
+export default FlareLane;
