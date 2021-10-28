@@ -1,6 +1,6 @@
+import FlareLane from '@flarelane/react-native-sdk';
 import * as React from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
-import FlareLane from 'react-native-flarelane';
 import type { Notification } from 'src/types';
 
 const tags = { age: 27, gender: 'men' };
