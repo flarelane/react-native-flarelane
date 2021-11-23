@@ -17,6 +17,7 @@ import com.flarelane.FlareLane;
 import com.flarelane.Logger;
 import com.flarelane.Notification;
 import com.flarelane.NotificationConvertedHandler;
+import com.flarelane.SdkType;
 
 import org.json.JSONObject;
 
@@ -32,6 +33,7 @@ public class FlareLaneModule extends ReactContextBaseJavaModule {
   public FlareLaneModule(ReactApplicationContext reactContext) {
     super(reactContext);
     mReactApplicationContext = reactContext;
+    FlareLane.sdkType = SdkType.REACTNATIVE;
   }
 
   @Override
@@ -47,6 +49,7 @@ public class FlareLaneModule extends ReactContextBaseJavaModule {
     try {
       context = mReactApplicationContext.getApplicationContext();
       FlareLane.initWithContext(context, projectId);
+      setNotificationConvertedHandler(context);
     } catch(Exception e) {
       Logger.error("exception");
       e.printStackTrace();
@@ -78,8 +81,6 @@ public class FlareLaneModule extends ReactContextBaseJavaModule {
         context.startService(service);
       }
     });
-
-    Logger.verbose("FlareLane-RN setNotificationConvertedHandler completed");
   }
 
   // ----- SET DEVICE META DATA -----
