@@ -25,19 +25,9 @@ class RCTFlareLane: RCTEventEmitter {
   }
   
   // ----- EVENT HANDLERS -----
-  
-  func notificationPayloadToDictionary (payload: FlareLaneNotification) -> [String: Optional<String>] {
-    let data = ["id": payload.id,
-                "title": payload.title,
-                "body": payload.body,
-                "url": payload.url]
-    
-    return data
-  }
-  
   @objc func setNotificationConvertedHandlerEvent() {
     FlareLane.setNotificationConvertedHandler() { payload in
-      RCTFlareLane.emitter.sendEvent(withName: self.notificationConvertedEventKey, body: self.notificationPayloadToDictionary(payload: payload))
+      RCTFlareLane.emitter.sendEvent(withName: self.notificationConvertedEventKey, body: payload.toDictionary())
     }
   }
 
