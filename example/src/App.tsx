@@ -1,6 +1,6 @@
+import FlareLane from '@flarelane/react-native-sdk';
 import * as React from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
-import FlareLane from '@flarelane/react-native-sdk';
 import type { Notification } from 'src/types';
 
 const tags = { age: 27, gender: 'men' };
@@ -14,7 +14,7 @@ export default function App() {
   React.useEffect(() => {
     // Initialize by setting logLevel and projectId.
     FlareLane.setLogLevel('verbose');
-    FlareLane.initialize('');
+    FlareLane.initialize('INPUT_YOUR_PROJECT_ID');
 
     // Executes a handler with notification data when notification is converted.
     FlareLane.setNotificationConvertedHandler((payload) => {
