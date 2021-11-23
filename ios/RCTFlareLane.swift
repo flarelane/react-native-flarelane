@@ -20,6 +20,7 @@ class RCTFlareLane: RCTEventEmitter {
   
   @objc(initialize:)
   func initialize(projectId: String) {
+    FlareLane.setSdkType(sdkType: .reactnative)
     let launchOptions = self.bridge.launchOptions as? [UIApplication.LaunchOptionsKey: Any]
     FlareLane.initWithLaunchOptions(launchOptions, projectId: projectId)
   }
