@@ -8,6 +8,7 @@ class RCTFlareLane: RCTEventEmitter {
   override init() {
     super.init()
     RCTFlareLane.emitter = self
+    FlareLane.setSdkInfo(sdkType: .reactnative, sdkVersion: "1.0.7")
   }
 
   // ----- PUBLIC METHOD -----
@@ -20,7 +21,6 @@ class RCTFlareLane: RCTEventEmitter {
   
   @objc(initialize:)
   func initialize(projectId: String) {
-    FlareLane.setSdkType(sdkType: .reactnative)
     let launchOptions = self.bridge.launchOptions as? [UIApplication.LaunchOptionsKey: Any]
     FlareLane.initWithLaunchOptions(launchOptions, projectId: projectId)
   }
