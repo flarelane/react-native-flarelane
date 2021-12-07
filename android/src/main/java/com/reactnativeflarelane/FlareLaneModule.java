@@ -14,7 +14,6 @@ import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.module.annotations.ReactModule;
 import com.flarelane.FlareLane;
-import com.flarelane.Logger;
 import com.flarelane.Notification;
 import com.flarelane.NotificationConvertedHandler;
 import com.flarelane.SdkType;
@@ -22,6 +21,7 @@ import com.flarelane.SdkType;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import android.util.Log;
 
 
 @ReactModule(name = FlareLaneModule.NAME)
@@ -33,7 +33,8 @@ public class FlareLaneModule extends ReactContextBaseJavaModule {
   public FlareLaneModule(ReactApplicationContext reactContext) {
     super(reactContext);
     mReactApplicationContext = reactContext;
-    FlareLane.sdkType = SdkType.REACTNATIVE;
+    FlareLane.SdkInfo.type = SdkType.REACTNATIVE;
+    FlareLane.SdkInfo.version = "1.0.7";
   }
 
   @Override
@@ -51,8 +52,7 @@ public class FlareLaneModule extends ReactContextBaseJavaModule {
       FlareLane.initWithContext(context, projectId);
       setNotificationConvertedHandler(context);
     } catch(Exception e) {
-      Logger.error("exception");
-      e.printStackTrace();
+      Log.e("FlareLane", Log.getStackTraceString(e));
     }
   }
 
@@ -69,7 +69,7 @@ public class FlareLaneModule extends ReactContextBaseJavaModule {
 
       @Override
       public void onConverted(Notification notification) {
-        Logger.verbose("FlareLane-RN Sent convert event via headless");
+        Log.v("FlareLane", "FlareLane-RN Sent convert event via headless");
 
         Intent service = new Intent(context.getApplicationContext(), FlareLaneNotificationConvertedService.class);
         Bundle bundle = new Bundle();
@@ -96,8 +96,7 @@ public class FlareLaneModule extends ReactContextBaseJavaModule {
       JSONObject jsonObjectTags = new JSONObject(tags.toHashMap());
       FlareLane.setTags(context, jsonObjectTags);
     } catch (Exception e) {
-      Logger.error("exception");
-      e.printStackTrace();
+      Log.e("FlareLane", Log.getStackTraceString(e));
     }
   }
 
@@ -107,8 +106,7 @@ public class FlareLaneModule extends ReactContextBaseJavaModule {
       ArrayList arrayListTags = tags.toArrayList();
       FlareLane.deleteTags(context, arrayListTags);
     } catch (Exception e) {
-      Logger.error("exception");
-      e.printStackTrace();
+      Log.e("FlareLane", Log.getStackTraceString(e));
     }
   }
 
