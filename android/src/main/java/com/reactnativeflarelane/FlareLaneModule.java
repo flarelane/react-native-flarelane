@@ -43,6 +43,12 @@ public class FlareLaneModule extends ReactContextBaseJavaModule {
     return NAME;
   }
 
+  // ----- PUBLIC STATIC METHOD -----
+
+  public static void setNotificationIcon(int notificationIcon) {
+    FlareLane.setNotificationIcon(notificationIcon);
+  }
+
   // ----- PUBLIC METHOD -----
 
   @ReactMethod
