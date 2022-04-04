@@ -1,6 +1,7 @@
 package com.example.reactnativeflarelane;
 
 import android.app.Application;
+import android.app.NotificationManager;
 import android.content.Context;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
@@ -10,6 +11,8 @@ import com.facebook.react.ReactInstanceManager;
 import com.facebook.soloader.SoLoader;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+
+import com.reactnativeflarelane.FlareLaneModule;
 import com.reactnativeflarelane.FlareLanePackage;
 
 public class MainApplication extends Application implements ReactApplication {
@@ -47,6 +50,7 @@ public class MainApplication extends Application implements ReactApplication {
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
     initializeFlipper(this, getReactNativeHost().getReactInstanceManager()); // Remove this line if you don't want Flipper enabled
+    FlareLaneModule.setAccentColor("#a84232");
   }
 
   /**

@@ -16,6 +16,7 @@ import com.facebook.react.module.annotations.ReactModule;
 import com.flarelane.FlareLane;
 import com.flarelane.Notification;
 import com.flarelane.NotificationConvertedHandler;
+import com.flarelane.NotificationManager;
 import com.flarelane.SdkType;
 
 import org.json.JSONObject;
@@ -34,7 +35,7 @@ public class FlareLaneModule extends ReactContextBaseJavaModule {
     super(reactContext);
     mReactApplicationContext = reactContext;
     FlareLane.SdkInfo.type = SdkType.REACTNATIVE;
-    FlareLane.SdkInfo.version = "1.0.7";
+    FlareLane.SdkInfo.version = "1.0.10";
   }
 
   @Override
@@ -47,6 +48,10 @@ public class FlareLaneModule extends ReactContextBaseJavaModule {
 
   public static void setNotificationIcon(int notificationIcon) {
     FlareLane.setNotificationIcon(notificationIcon);
+  }
+
+  public static void setAccentColor(String accentColor) {
+    NotificationManager.accentColor = accentColor;
   }
 
   // ----- PUBLIC METHOD -----
