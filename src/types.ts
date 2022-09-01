@@ -5,6 +5,8 @@ export interface Notification {
   title?: string;
   body: string;
   url?: string;
+  imageUrl?: string;
+  data?: Record<string, any>;
 }
 
 export type NotificationHandlerCallback = (payload: Notification) => void;

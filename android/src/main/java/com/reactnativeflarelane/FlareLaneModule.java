@@ -35,7 +35,7 @@ public class FlareLaneModule extends ReactContextBaseJavaModule {
     super(reactContext);
     mReactApplicationContext = reactContext;
     FlareLane.SdkInfo.type = SdkType.REACTNATIVE;
-    FlareLane.SdkInfo.version = "1.0.11";
+    FlareLane.SdkInfo.version = "1.0.12";
   }
 
   @Override
@@ -88,6 +88,9 @@ public class FlareLaneModule extends ReactContextBaseJavaModule {
         bundle.putString("title", notification.title);
         bundle.putString("body", notification.body);
         bundle.putString("url", notification.url);
+        bundle.putString("imageUrl", notification.imageUrl);
+        bundle.putString("data", notification.data);
+
         service.putExtras(bundle);
         context.startService(service);
       }

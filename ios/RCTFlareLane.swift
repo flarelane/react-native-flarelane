@@ -8,7 +8,7 @@ class RCTFlareLane: RCTEventEmitter {
   override init() {
     super.init()
     RCTFlareLane.emitter = self
-    FlareLane.setSdkInfo(sdkType: .reactnative, sdkVersion: "1.0.11")
+    FlareLane.setSdkInfo(sdkType: .reactnative, sdkVersion: "1.0.12")
   }
 
   // ----- PUBLIC METHOD -----
@@ -28,7 +28,15 @@ class RCTFlareLane: RCTEventEmitter {
   // ----- EVENT HANDLERS -----
   @objc func setNotificationConvertedHandlerEvent() {
     FlareLane.setNotificationConvertedHandler() { payload in
-      RCTFlareLane.emitter.sendEvent(withName: self.notificationConvertedEventKey, body: payload.toDictionary())
+      let notificationDictionary: [String: Optional<Any>] = [
+        "id": payload.id,
+        "title": payload.title,
+        "body": payload.body,
+        "imageUrl": payload.imageUrl,
+        "data": payload.data
+      ]
+      
+      RCTFlareLane.emitter.sendEvent(withName: self.notificationConvertedEventKey, body: notificationDictionary)
     }
   }
 

@@ -23,8 +23,17 @@ class FlareLaneEventManager {
     } else {
       AppRegistry.registerHeadlessTask(
         events.NOTIFICATION_CONVERTED,
-        () => (data) => {
-          callback(data);
+        () => (noti) => {
+          try {
+            if (typeof noti.data === 'string') {
+              noti.data = JSON.parse(noti.data);
+            }
+          } catch (e) {
+            console.error(e);
+            noti.data = undefined;
+          }
+
+          callback(noti);
           return Promise.resolve();
         }
       );
