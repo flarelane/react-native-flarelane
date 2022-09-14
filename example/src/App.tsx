@@ -46,9 +46,12 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Text>FlareLane Test</Text>
+      <Text>Notification id: {text?.id}</Text>
       <Text>Notification title: {text?.title}</Text>
       <Text>Notification body: {text?.body}</Text>
       <Text>Notification url: {text?.url}</Text>
+      <Text>Notification imageUrl: {text?.imageUrl}</Text>
+      <Text>Notification data: {JSON.stringify(text?.data)}</Text>
       <Button onPress={toggleUserId} title="TOGGLE USER ID" />
       <Button onPress={toggleIsSubscribed} title="TOGGLE IS SUBSCRIBED" />
       <Button onPress={toggleTags} title="TOGGLE TAGS" />
