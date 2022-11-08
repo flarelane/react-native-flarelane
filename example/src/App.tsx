@@ -43,6 +43,10 @@ export default function App() {
     }
   };
 
+  const getDeviceId = async () => {
+    console.log(await FlareLane.getDeviceId());
+  };
+
   return (
     <View style={styles.container}>
       <Text>FlareLane Test</Text>
@@ -55,6 +59,7 @@ export default function App() {
       <Button onPress={toggleUserId} title="TOGGLE USER ID" />
       <Button onPress={toggleIsSubscribed} title="TOGGLE IS SUBSCRIBED" />
       <Button onPress={toggleTags} title="TOGGLE TAGS" />
+      <Button onPress={getDeviceId} title="GET DEVICE ID" />
     </View>
   );
 }

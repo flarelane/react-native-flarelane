@@ -21,4 +21,5 @@ export interface FlareLaneType {
   setTags: (tags: Tags) => void;
   deleteTags: (keys: string[]) => void;
   setIsSubscribed: (isSubscribed: boolean) => void;
+  getDeviceId: (callback: (id: string | null) => void) => void;
 }

@@ -63,6 +63,10 @@ class RCTFlareLane: RCTEventEmitter {
      FlareLane.setIsSubscribed(isSubscribed: isSubscribed)
   }
 
+  @objc func getDeviceId(_ successCallback: RCTResponseSenderBlock) {
+    successCallback([FlareLane.getDeviceId()])
+  }
+
   // ----- SDK SETTINGS -----
 
   override open func supportedEvents() -> [String] {
