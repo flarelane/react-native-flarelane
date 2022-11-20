@@ -29,4 +29,6 @@ RCT_EXTERN_METHOD(setIsSubscribed:
                     (BOOL)isSubscribed 
 )
 
+RCT_EXTERN_METHOD(getDeviceId: (RCTResponseSenderBlock *)successCallback)
+
 @end

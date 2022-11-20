@@ -110,6 +110,16 @@ class FlareLane {
       publicMethodErrorHandler(error, this.name);
     }
   }
+
+  // ----- GET DEVICE META DATA -----
+
+  static getDeviceId() {
+    return new Promise((resolve) => {
+      FlareLaneNativeModule.getDeviceId((id) => {
+        resolve(id);
+      });
+    });
+  }
 }
 
 export default FlareLane;

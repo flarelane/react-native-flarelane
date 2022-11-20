@@ -1,7 +1,12 @@
 import FlareLane from '@flarelane/react-native-sdk';
+import messaging from '@react-native-firebase/messaging';
 import * as React from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
+import OneSignal from 'react-native-onesignal';
 import type { Notification } from 'src/types';
+
+const FLARELANE_PROJECT_ID = 'FLARELANE_PROJECT_ID';
+const ONESIGNAL_APP_ID = 'ONESIGNAL_APP_ID';
 
 const tags = { age: 27, gender: 'men' };
 
@@ -14,14 +19,69 @@ export default function App() {
   React.useEffect(() => {
     // Initialize by setting logLevel and projectId.
     FlareLane.setLogLevel('verbose');
-    FlareLane.initialize('INPUT_YOUR_PROJECT_ID');
-
+    FlareLane.initialize(FLARELANE_PROJECT_ID);
     // Executes a handler with notification data when notification is converted.
     FlareLane.setNotificationConvertedHandler((payload) => {
       // Do something...
       setText(payload); // Example code
     });
+
+    setupOneSignal();
+    setupFCM();
   }, []);
+
+  async function setupFCM() {
+    const authStatus = await messaging().requestPermission();
+    const enabled =
+      authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+      authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+
+    if (enabled) {
+      messaging().onMessage(async (remoteMessage) => {
+        console.log(
+          'FCM: A new FCM message arrived!',
+          JSON.stringify(remoteMessage)
+        );
+      });
+      messaging().setBackgroundMessageHandler(async (remoteMessage) => {
+        console.log(
+          'FCM: Message handled in the background!',
+          JSON.stringify(remoteMessage)
+        );
+      });
+      messaging().onNotificationOpenedApp((remoteMessage) => {
+        console.log(
+          'FCM: Notification caused app to open from background state:',
+          JSON.stringify(remoteMessage)
+        );
+      });
+      await messaging().registerDeviceForRemoteMessages();
+      const token = await messaging().getToken();
+      console.log(`FCM: Token ${token}`);
+    }
+  }
+
+  async function setupOneSignal() {
+    OneSignal.setAppId(ONESIGNAL_APP_ID);
+    OneSignal.promptForPushNotificationsWithUserResponse();
+    OneSignal.setNotificationWillShowInForegroundHandler(
+      (notificationReceivedEvent) => {
+        console.log(
+          'OneSignal: notification will show in foreground:',
+          notificationReceivedEvent
+        );
+        let notification = notificationReceivedEvent.getNotification();
+        console.log('notification: ', notification);
+        const data = notification.additionalData;
+        console.log('additionalData: ', data);
+        // Complete with null means don't show a notification.
+        notificationReceivedEvent.complete(notification);
+      }
+    );
+    OneSignal.setNotificationOpenedHandler((notification) => {
+      console.log('OneSignal: notification opened:', notification);
+    });
+  }
 
   const toggleUserId = () => {
     FlareLane.setUserId(isSetUserId ? null : 'myuser@flarelane.com');
@@ -43,6 +103,10 @@ export default function App() {
     }
   };
 
+  const getDeviceId = async () => {
+    console.log(await FlareLane.getDeviceId());
+  };
+
   return (
     <View style={styles.container}>
       <Text>FlareLane Test</Text>
@@ -55,6 +119,7 @@ export default function App() {
       <Button onPress={toggleUserId} title="TOGGLE USER ID" />
       <Button onPress={toggleIsSubscribed} title="TOGGLE IS SUBSCRIBED" />
       <Button onPress={toggleTags} title="TOGGLE TAGS" />
+      <Button onPress={getDeviceId} title="GET DEVICE ID" />
     </View>
   );
 }

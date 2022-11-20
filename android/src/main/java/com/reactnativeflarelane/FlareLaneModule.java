@@ -13,6 +13,8 @@ import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.module.annotations.ReactModule;
+import com.facebook.react.bridge.Callback;
+
 import com.flarelane.FlareLane;
 import com.flarelane.Notification;
 import com.flarelane.NotificationConvertedHandler;
@@ -35,7 +37,7 @@ public class FlareLaneModule extends ReactContextBaseJavaModule {
     super(reactContext);
     mReactApplicationContext = reactContext;
     FlareLane.SdkInfo.type = SdkType.REACTNATIVE;
-    FlareLane.SdkInfo.version = "1.0.13";
+    FlareLane.SdkInfo.version = "1.1.0";
   }
 
   @Override
@@ -127,5 +129,11 @@ public class FlareLaneModule extends ReactContextBaseJavaModule {
   @ReactMethod
   public void setIsSubscribed(boolean isSubscribed) {
     FlareLane.setIsSubscribed(context, isSubscribed);
+  }
+
+  @ReactMethod
+  public void getDeviceId(Callback callback) {
+    String deviceId = FlareLane.getDeviceId(context);
+    callback.invoke(deviceId);
   }
 }
