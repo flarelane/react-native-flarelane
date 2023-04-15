@@ -1,6 +1,7 @@
 import FlareLane from '@flarelane/react-native-sdk';
 import * as React from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
+import OneSignal from 'react-native-onesignal';
 import type { Notification } from 'src/types';
 
 const tags = { age: 27, gender: 'men' };
@@ -12,11 +13,17 @@ export default function App() {
   const [isSetTags, setIsSetTags] = React.useState<boolean>(false);
 
   React.useEffect(() => {
-    // Executes a handler with notification data when notification is converted.
-    FlareLane.setNotificationConvertedHandler((payload) => {
-      // Do something...
-      setText(payload); // Example code
-    });
+    setTimeout(() => {
+      console.log('Set converted handler delayed');
+      OneSignal.setNotificationOpenedHandler((notification) => {
+        console.log('OneSignal: notification opened:', notification);
+      });
+      // Executes a handler with notification data when notification is converted.
+      FlareLane.setNotificationConvertedHandler((payload) => {
+        // Do something...
+        setText(payload); // Example code
+      });
+    }, 2000);
   }, []);
 
   const toggleUserId = () => {

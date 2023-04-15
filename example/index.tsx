@@ -64,7 +64,4 @@ async function setupOneSignal() {
       notificationReceivedEvent.complete(notification);
     }
   );
-  OneSignal.setNotificationOpenedHandler((notification) => {
-    console.log('OneSignal: notification opened:', notification);
-  });
 }

@@ -37,7 +37,7 @@ public class FlareLaneModule extends ReactContextBaseJavaModule {
     super(reactContext);
     mReactApplicationContext = reactContext;
     FlareLane.SdkInfo.type = SdkType.REACTNATIVE;
-    FlareLane.SdkInfo.version = "1.1.0";
+    FlareLane.SdkInfo.version = "1.2.0";
   }
 
   @Override
@@ -63,7 +63,6 @@ public class FlareLaneModule extends ReactContextBaseJavaModule {
     try {
       context = mReactApplicationContext.getApplicationContext();
       FlareLane.initWithContext(context, projectId);
-      setNotificationConvertedHandler(context);
     } catch(Exception e) {
       Log.e("FlareLane", Log.getStackTraceString(e));
     }
@@ -76,13 +75,13 @@ public class FlareLaneModule extends ReactContextBaseJavaModule {
   }
 
 // ----- EVENT HANDLERS -----
-
-  public static void setNotificationConvertedHandler(Context context) {
+  @ReactMethod
+  public void setNotificationConvertedHandler() {
     FlareLane.setNotificationConvertedHandler(new NotificationConvertedHandler() {
 
       @Override
       public void onConverted(Notification notification) {
-        Log.v("FlareLane", "FlareLane-RN Sent convert event via headless");
+        Log.v("FlareLane", "Send convert event via headless");
 
         Intent service = new Intent(context.getApplicationContext(), FlareLaneNotificationConvertedService.class);
         Bundle bundle = new Bundle();
