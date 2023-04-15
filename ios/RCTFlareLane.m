@@ -4,29 +4,29 @@
 @interface RCT_EXTERN_MODULE(RCTFlareLane, RCTEventEmitter)
 
 RCT_EXTERN_METHOD(setLogLevel:
-                    (NSInteger)logLevel 
+                    (NSInteger)logLevel
 )
 
 RCT_EXTERN_METHOD(initialize:
-                    (NSString)projectId 
+                    (NSString)projectId
 )
 
-RCT_EXTERN_METHOD(setNotificationConvertedHandlerEvent)
+RCT_EXTERN_METHOD(setNotificationConvertedHandler)
 
 RCT_EXTERN_METHOD(setUserId:
-                    (NSString)userId 
+                    (NSString)userId
 )
 
 RCT_EXTERN_METHOD(setTags:
-                    (NSDictionary)tags 
+                    (NSDictionary)tags
 )
 
 RCT_EXTERN_METHOD(deleteTags:
-                    (NSArray)keys 
+                    (NSArray)keys
 )
 
 RCT_EXTERN_METHOD(setIsSubscribed:
-                    (BOOL)isSubscribed 
+                    (BOOL)isSubscribed
 )
 
 RCT_EXTERN_METHOD(getDeviceId: (RCTResponseSenderBlock *)successCallback)

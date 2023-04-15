@@ -16,7 +16,7 @@ export type Tags = Record<string, unknown>;
 export interface FlareLaneType {
   setLogLevel(level: number): void;
   initialize(projectId: string): void;
-  setNotificationConvertedHandlerEvent: () => void;
+  setNotificationConvertedHandler: () => void;
   setUserId: (userId: string | null) => void;
   setTags: (tags: Tags) => void;
   deleteTags: (keys: string[]) => void;

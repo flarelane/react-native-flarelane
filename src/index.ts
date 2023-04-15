@@ -60,6 +60,7 @@ class FlareLane {
     try {
       console.log(`FlareLane - Set notification converted handler.`);
       eventManager.setNotificationConvertedHandler(callback);
+      FlareLaneNativeModule.setNotificationConvertedHandler();
     } catch (error: any) {
       publicMethodErrorHandler(error, this.name);
     }

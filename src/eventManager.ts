@@ -19,7 +19,6 @@ class FlareLaneEventManager {
   setNotificationConvertedHandler(callback: NotificationHandlerCallback) {
     if (Platform.OS === 'ios') {
       this.setEventHandler(events.NOTIFICATION_CONVERTED, callback);
-      this.FlareLane.setNotificationConvertedHandlerEvent();
     } else {
       AppRegistry.registerHeadlessTask(
         events.NOTIFICATION_CONVERTED,
