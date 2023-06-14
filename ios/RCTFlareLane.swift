@@ -8,7 +8,7 @@ class RCTFlareLane: RCTEventEmitter {
   override init() {
     super.init()
     RCTFlareLane.emitter = self
-    FlareLane.setSdkInfo(sdkType: .reactnative, sdkVersion: "1.2.0")
+    FlareLane.setSdkInfo(sdkType: .reactnative, sdkVersion: "1.3.0")
   }
 
   // ----- PUBLIC METHOD -----
@@ -44,7 +44,7 @@ class RCTFlareLane: RCTEventEmitter {
   // ----- SET DEVICE META DATA -----
 
   @objc(setUserId:)
-  func setUserId(userId: String) {
+  func setUserId(userId: String?) {
      FlareLane.setUserId(userId: userId)
   }
 
@@ -65,6 +65,11 @@ class RCTFlareLane: RCTEventEmitter {
 
   @objc func getDeviceId(_ successCallback: RCTResponseSenderBlock) {
     successCallback([FlareLane.getDeviceId()])
+  }
+
+  @objc(trackEvent:data:)
+  func trackEvent(type: String, data: [String: Any]?) {
+    FlareLane.trackEvent(type, data: data)
   }
 
   // ----- SDK SETTINGS -----

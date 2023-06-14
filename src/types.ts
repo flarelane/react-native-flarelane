@@ -12,6 +12,7 @@ export interface Notification {
 export type NotificationHandlerCallback = (payload: Notification) => void;
 
 export type Tags = Record<string, unknown>;
+export type EventData = Record<string, string | number> | null;
 
 export interface FlareLaneType {
   setLogLevel(level: number): void;
@@ -22,4 +23,5 @@ export interface FlareLaneType {
   deleteTags: (keys: string[]) => void;
   setIsSubscribed: (isSubscribed: boolean) => void;
   getDeviceId: (callback: (id: string | null) => void) => void;
+  trackEvent: (type: string, data?: EventData) => void;
 }
