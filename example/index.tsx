@@ -5,7 +5,7 @@ import OneSignal from 'react-native-onesignal';
 import { name as appName } from './app.json';
 import App from './src/App';
 
-const FLARELANE_PROJECT_ID = 'FLARELANE_PROJECT_ID';
+const FLARELANE_PROJECT_ID = 'a43cdc82-0ea5-4fdd-aebc-1940fe99b6c3';
 const ONESIGNAL_APP_ID = 'ONESIGNAL_APP_ID';
 
 FlareLane.setLogLevel('verbose');
