@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* FlareLaneExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* FlareLaneExampleTests.m */; };
-		04EBFC802A3996AE007CAA6B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 04EBFC7F2A3996AE007CAA6B /* GoogleService-Info.plist */; };
+		04E83A602A39B9800093B32C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 04E83A5F2A39B9800093B32C /* GoogleService-Info.plist */; };
 		04F950E328056E290091DA10 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F950E228056E290091DA10 /* NotificationService.swift */; };
 		04F950E728056E290091DA10 /* FlareLaneNotificationServiceExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 04F950E028056E290091DA10 /* FlareLaneNotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		11E92E2215E03B5A9AFBB069 /* Pods_FlareLaneNotificationServiceExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA06F39B2550A3523CD2344B /* Pods_FlareLaneNotificationServiceExtension.framework */; };
@@ -67,7 +67,7 @@
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* FlareLaneExampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FlareLaneExampleTests.m; sourceTree = "<group>"; };
 		0462F6EB29EAB1CD002ABB3E /* OneSignalExtension.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = OneSignalExtension.xcframework; path = Pods/OneSignalXCFramework/iOS_SDK/OneSignalSDK/OneSignal_Extension/OneSignalExtension.xcframework; sourceTree = "<group>"; };
-		04EBFC7F2A3996AE007CAA6B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		04E83A5F2A39B9800093B32C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		04F950E028056E290091DA10 /* FlareLaneNotificationServiceExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = FlareLaneNotificationServiceExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		04F950E228056E290091DA10 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		04F950E428056E290091DA10 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -161,7 +161,7 @@
 		13B07FAE1A68108700A75B9A /* FlareLaneExample */ = {
 			isa = PBXGroup;
 			children = (
-				04EBFC7F2A3996AE007CAA6B /* GoogleService-Info.plist */,
+				04E83A5F2A39B9800093B32C /* GoogleService-Info.plist */,
 				4240BE1626FDC5140077B6FE /* FlareLaneExample.entitlements */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
@@ -407,8 +407,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
+				04E83A602A39B9800093B32C /* GoogleService-Info.plist in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				04EBFC802A3996AE007CAA6B /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

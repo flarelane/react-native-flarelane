@@ -31,4 +31,9 @@ RCT_EXTERN_METHOD(setIsSubscribed:
 
 RCT_EXTERN_METHOD(getDeviceId: (RCTResponseSenderBlock *)successCallback)
 
+RCT_EXTERN_METHOD(trackEvent:
+                    (NSString)isSubscribed
+                    data: (NSDictionary)data
+)
+
 @end

@@ -1,6 +1,7 @@
 import { NativeModules } from 'react-native';
 import FlareLaneEventManager from './eventManager';
 import type {
+  EventData,
   FlareLaneType,
   LogLevel,
   NotificationHandlerCallback,
@@ -107,6 +108,18 @@ class FlareLane {
     try {
       console.log(`FlareLane - Set is subscribed`);
       FlareLaneNativeModule.setIsSubscribed(isSubscribed);
+    } catch (error: any) {
+      publicMethodErrorHandler(error, this.name);
+    }
+  }
+
+  static trackEvent(type: string, data?: EventData) {
+    if (!isString(type, this.name)) return;
+    if (data && !isPlainObject(data, this.name)) return;
+
+    try {
+      console.log(`FlareLane - Track Event`);
+      FlareLaneNativeModule.trackEvent(type, data || null);
     } catch (error: any) {
       publicMethodErrorHandler(error, this.name);
     }
