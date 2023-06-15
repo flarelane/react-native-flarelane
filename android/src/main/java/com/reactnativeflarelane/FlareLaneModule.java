@@ -137,7 +137,11 @@ public class FlareLaneModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
-  public void trackEvent(String type, JSONObject data) {
-    FlareLane.trackEvent(context, type, data);
+  public void trackEvent(String type, ReadableMap data) {
+    try {
+      FlareLane.trackEvent(context, type, data == null ? null : new JSONObject(data.toHashMap()));
+    } catch (Exception e) {
+      Log.e("FlareLane", Log.getStackTraceString(e));
+    }
   }
 }
