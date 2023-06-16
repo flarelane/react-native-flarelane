@@ -50,6 +50,10 @@ export default function App() {
     console.log(await FlareLane.getDeviceId());
   };
 
+  const trackEvent = () => {
+    FlareLane.trackEvent('test_event', { react: 'native' });
+  };
+
   return (
     <View style={styles.container}>
       <Text>FlareLane Test</Text>
@@ -63,6 +67,7 @@ export default function App() {
       <Button onPress={toggleIsSubscribed} title="TOGGLE IS SUBSCRIBED" />
       <Button onPress={toggleTags} title="TOGGLE TAGS" />
       <Button onPress={getDeviceId} title="GET DEVICE ID" />
+      <Button onPress={trackEvent} title="TRACK EVENT" />
     </View>
   );
 }

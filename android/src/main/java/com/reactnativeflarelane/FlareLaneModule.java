@@ -37,7 +37,7 @@ public class FlareLaneModule extends ReactContextBaseJavaModule {
     super(reactContext);
     mReactApplicationContext = reactContext;
     FlareLane.SdkInfo.type = SdkType.REACTNATIVE;
-    FlareLane.SdkInfo.version = "1.2.0";
+    FlareLane.SdkInfo.version = "1.3.0";
   }
 
   @Override
@@ -134,5 +134,14 @@ public class FlareLaneModule extends ReactContextBaseJavaModule {
   public void getDeviceId(Callback callback) {
     String deviceId = FlareLane.getDeviceId(context);
     callback.invoke(deviceId);
+  }
+
+  @ReactMethod
+  public void trackEvent(String type, ReadableMap data) {
+    try {
+      FlareLane.trackEvent(context, type, data == null ? null : new JSONObject(data.toHashMap()));
+    } catch (Exception e) {
+      Log.e("FlareLane", Log.getStackTraceString(e));
+    }
   }
 }
