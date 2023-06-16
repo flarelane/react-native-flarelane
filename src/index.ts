@@ -114,11 +114,11 @@ class FlareLane {
   }
 
   static trackEvent(type: string, data?: EventData) {
-    if (!isString(type, this.name)) return;
-    if (data && !isPlainObject(data, this.name)) return;
-
     try {
-      console.log(`FlareLane - Track Event`);
+      if (!isString(type, this.name)) return;
+      if (data && !isPlainObject(data, this.name)) return;
+
+      console.log(`FlareLane - Track Event ${JSON.stringify({ type, data })}`);
       FlareLaneNativeModule.trackEvent(type, data || null);
     } catch (error: any) {
       publicMethodErrorHandler(error, this.name);
