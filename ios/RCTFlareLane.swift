@@ -8,7 +8,7 @@ class RCTFlareLane: RCTEventEmitter {
   override init() {
     super.init()
     RCTFlareLane.emitter = self
-    FlareLane.setSdkInfo(sdkType: .reactnative, sdkVersion: "1.3.0")
+    FlareLane.setSdkInfo(sdkType: .reactnative, sdkVersion: "1.3.1")
   }
 
   // ----- PUBLIC METHOD -----
@@ -45,22 +45,28 @@ class RCTFlareLane: RCTEventEmitter {
 
   @objc(setUserId:)
   func setUserId(userId: String?) {
-     FlareLane.setUserId(userId: userId)
+    FlareLane.setUserId(userId: userId)
+  }
+  
+  @objc func getTags(_ successCallback: @escaping RCTResponseSenderBlock) {
+    FlareLane.getTags() { tags in
+      successCallback([tags])
+    }
   }
 
   @objc(setTags:)
   func setTags(tags: [String: Any]) {
-     FlareLane.setTags(tags: tags)
+    FlareLane.setTags(tags: tags)
   }
 
   @objc(deleteTags:)
   func deleteTags(keys: [String]) {
-     FlareLane.deleteTags(keys: keys)
+    FlareLane.deleteTags(keys: keys)
   }
 
   @objc(setIsSubscribed:)
   func setIsSubscribed(isSubscribed: Bool) {
-     FlareLane.setIsSubscribed(isSubscribed: isSubscribed)
+    FlareLane.setIsSubscribed(isSubscribed: isSubscribed)
   }
 
   @objc func getDeviceId(_ successCallback: RCTResponseSenderBlock) {

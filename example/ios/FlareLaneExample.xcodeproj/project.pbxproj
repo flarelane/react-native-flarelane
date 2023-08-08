@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* FlareLaneExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* FlareLaneExampleTests.m */; };
-		04E83A602A39B9800093B32C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 04E83A5F2A39B9800093B32C /* GoogleService-Info.plist */; };
 		04F950E328056E290091DA10 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F950E228056E290091DA10 /* NotificationService.swift */; };
 		04F950E728056E290091DA10 /* FlareLaneNotificationServiceExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 04F950E028056E290091DA10 /* FlareLaneNotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		11E92E2215E03B5A9AFBB069 /* Pods_FlareLaneNotificationServiceExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA06F39B2550A3523CD2344B /* Pods_FlareLaneNotificationServiceExtension.framework */; };
@@ -19,6 +18,7 @@
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* FlareLaneExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* FlareLaneExampleTests.m */; };
+		42E8067D2A820B6300DFE50A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 42E8067B2A820AE800DFE50A /* GoogleService-Info.plist */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		CDABD24FE74A12B746493169 /* Pods_FlareLaneExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CFA0D27443D984902A3D86C /* Pods_FlareLaneExample.framework */; };
 /* End PBXBuildFile section */
@@ -67,7 +67,6 @@
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* FlareLaneExampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FlareLaneExampleTests.m; sourceTree = "<group>"; };
 		0462F6EB29EAB1CD002ABB3E /* OneSignalExtension.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = OneSignalExtension.xcframework; path = Pods/OneSignalXCFramework/iOS_SDK/OneSignalSDK/OneSignal_Extension/OneSignalExtension.xcframework; sourceTree = "<group>"; };
-		04E83A5F2A39B9800093B32C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		04F950E028056E290091DA10 /* FlareLaneNotificationServiceExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = FlareLaneNotificationServiceExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		04F950E228056E290091DA10 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		04F950E428056E290091DA10 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -81,6 +80,7 @@
 		2D02E47B1E0B4A5D006451C7 /* FlareLaneExample-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "FlareLaneExample-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* FlareLaneExample-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "FlareLaneExample-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4240BE1626FDC5140077B6FE /* FlareLaneExample.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = FlareLaneExample.entitlements; path = FlareLaneExample/FlareLaneExample.entitlements; sourceTree = "<group>"; };
+		42E8067B2A820AE800DFE50A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		47F7ED3B7971BE374F7B8635 /* Pods-FlareLaneExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlareLaneExample.debug.xcconfig"; path = "Target Support Files/Pods-FlareLaneExample/Pods-FlareLaneExample.debug.xcconfig"; sourceTree = "<group>"; };
 		4D6714D69E36CCF8D3444656 /* Pods-FlareLaneNotificationServiceExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlareLaneNotificationServiceExtension.debug.xcconfig"; path = "Target Support Files/Pods-FlareLaneNotificationServiceExtension/Pods-FlareLaneNotificationServiceExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = FlareLaneExample/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -161,7 +161,7 @@
 		13B07FAE1A68108700A75B9A /* FlareLaneExample */ = {
 			isa = PBXGroup;
 			children = (
-				04E83A5F2A39B9800093B32C /* GoogleService-Info.plist */,
+				42E8067B2A820AE800DFE50A /* GoogleService-Info.plist */,
 				4240BE1626FDC5140077B6FE /* FlareLaneExample.entitlements */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
@@ -406,8 +406,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				42E8067D2A820B6300DFE50A /* GoogleService-Info.plist in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
-				04E83A602A39B9800093B32C /* GoogleService-Info.plist in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

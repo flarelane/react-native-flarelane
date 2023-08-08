@@ -17,6 +17,8 @@ RCT_EXTERN_METHOD(setUserId:
                     (NSString)userId
 )
 
+RCT_EXTERN_METHOD(getTags: (RCTResponseSenderBlock *)successCallback)
+
 RCT_EXTERN_METHOD(setTags:
                     (NSDictionary)tags
 )

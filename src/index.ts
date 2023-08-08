@@ -127,10 +127,18 @@ class FlareLane {
 
   // ----- GET DEVICE META DATA -----
 
-  static getDeviceId() {
+  static getDeviceId(): Promise<string | null> {
     return new Promise((resolve) => {
       FlareLaneNativeModule.getDeviceId((id) => {
         resolve(id);
+      });
+    });
+  }
+
+  static getTags(): Promise<Tags | null> {
+    return new Promise((resolve) => {
+      FlareLaneNativeModule.getTags((tags) => {
+        resolve(tags);
       });
     });
   }

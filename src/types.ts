@@ -19,6 +19,7 @@ export interface FlareLaneType {
   initialize(projectId: string): void;
   setNotificationConvertedHandler: () => void;
   setUserId: (userId: string | null) => void;
+  getTags: (callback: (tags: Tags | null) => void) => void;
   setTags: (tags: Tags) => void;
   deleteTags: (keys: string[]) => void;
   setIsSubscribed: (isSubscribed: boolean) => void;
