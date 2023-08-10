@@ -47,7 +47,7 @@ export default function App() {
   };
 
   const getTags = async () => {
-    console.log(await FlareLane.getTags());
+    FlareLane.getTags(console.log);
   };
 
   const getDeviceId = async () => {

@@ -135,12 +135,8 @@ class FlareLane {
     });
   }
 
-  static getTags(): Promise<Tags | null> {
-    return new Promise((resolve) => {
-      FlareLaneNativeModule.getTags((tags) => {
-        resolve(tags);
-      });
-    });
+  static getTags(getTagsHandler: (tags: Tags | null) => any) {
+    FlareLaneNativeModule.getTags(getTagsHandler);
   }
 }
 
