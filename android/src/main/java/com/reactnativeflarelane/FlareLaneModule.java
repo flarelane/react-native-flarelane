@@ -37,7 +37,7 @@ public class FlareLaneModule extends ReactContextBaseJavaModule {
     super(reactContext);
     mReactApplicationContext = reactContext;
     FlareLane.SdkInfo.type = SdkType.REACTNATIVE;
-    FlareLane.SdkInfo.version = "1.3.0";
+    FlareLane.SdkInfo.version = "1.3.1";
   }
 
   @Override
@@ -103,6 +103,24 @@ public class FlareLaneModule extends ReactContextBaseJavaModule {
   @ReactMethod
   public void setUserId(String userId) {
     FlareLane.setUserId(context, userId);
+  }
+
+  @ReactMethod
+  public void getTags(Callback callback) {
+    try {
+      FlareLane.getTags(context, new FlareLane.GetTagsHandler() {
+        @Override
+        public void onReceiveTags(JSONObject tags) {
+          try {
+            callback.invoke(Utils.convertJsonToMap(tags));
+          } catch (Exception e) {
+            Log.e("FlareLane", Log.getStackTraceString(e));
+          }
+        }
+      });
+    } catch (Exception e) {
+      Log.e("FlareLane", Log.getStackTraceString(e));
+    }
   }
 
   @ReactMethod
