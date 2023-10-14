@@ -56,5 +56,5 @@ repositories {
 dependencies {
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
-    implementation 'com.github.flarelane:FlareLane-Android-SDK:1.4.0-dev-231011-SNAPSHOT'
+    implementation 'com.github.flarelane:FlareLane-Android-SDK:dev-1.4.0-231011-2-SNAPSHOT'
 }

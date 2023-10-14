@@ -21,8 +21,10 @@ class RCTFlareLane: RCTEventEmitter {
   
   @objc(initialize:requestPermissionOnLaunch:)
   func initialize(projectId: String, requestPermissionOnLaunch: Bool) {
-    let launchOptions = self.bridge.launchOptions as? [UIApplication.LaunchOptionsKey: Any]
-    FlareLane.initWithLaunchOptions(launchOptions, projectId: projectId, requestPermissionOnLaunch: requestPermissionOnLaunch)
+    DispatchQueue.main.async {
+      let launchOptions = self.bridge.launchOptions as? [UIApplication.LaunchOptionsKey: Any]
+      FlareLane.initWithLaunchOptions(launchOptions, projectId: projectId, requestPermissionOnLaunch: requestPermissionOnLaunch)
+    }
   }
   
   // ----- EVENT HANDLERS -----
