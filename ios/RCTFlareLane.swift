@@ -8,7 +8,7 @@ class RCTFlareLane: RCTEventEmitter {
   override init() {
     super.init()
     RCTFlareLane.emitter = self
-    FlareLane.setSdkInfo(sdkType: .reactnative, sdkVersion: "1.3.1")
+    FlareLane.setSdkInfo(sdkType: .reactnative, sdkVersion: "1.4.0")
   }
 
   // ----- PUBLIC METHOD -----
@@ -19,10 +19,12 @@ class RCTFlareLane: RCTEventEmitter {
     FlareLane.setLogLevel(level: level)
   }
 
-  @objc(initialize:)
-  func initialize(projectId: String) {
-    let launchOptions = self.bridge.launchOptions as? [UIApplication.LaunchOptionsKey: Any]
-    FlareLane.initWithLaunchOptions(launchOptions, projectId: projectId)
+  @objc(initialize:requestPermissionOnLaunch:)
+  func initialize(projectId: String, requestPermissionOnLaunch: Bool) {
+    DispatchQueue.main.async {
+      let launchOptions = self.bridge.launchOptions as? [UIApplication.LaunchOptionsKey: Any]
+      FlareLane.initWithLaunchOptions(launchOptions, projectId: projectId, requestPermissionOnLaunch: requestPermissionOnLaunch)
+    }
   }
 
   // ----- EVENT HANDLERS -----
@@ -47,10 +49,10 @@ class RCTFlareLane: RCTEventEmitter {
   func setUserId(userId: String?) {
     FlareLane.setUserId(userId: userId)
   }
-  
+
   @objc func getTags(_ successCallback: @escaping RCTResponseSenderBlock) {
     FlareLane.getTags() { tags in
-      successCallback([tags])
+      successCallback([tags as Any])
     }
   }
 
@@ -64,13 +66,36 @@ class RCTFlareLane: RCTEventEmitter {
     FlareLane.deleteTags(keys: keys)
   }
 
-  @objc(setIsSubscribed:)
-  func setIsSubscribed(isSubscribed: Bool) {
-    FlareLane.setIsSubscribed(isSubscribed: isSubscribed)
+  // Deprecated
+  @objc(setIsSubscribed:successCallback:)
+  func setIsSubscribed(isSubscribed: Bool, successCallback: @escaping RCTResponseSenderBlock) {
+    FlareLane.setIsSubscribed(isSubscribed: isSubscribed) { isSubscribed in
+      successCallback([isSubscribed])
+    }
+  }
+
+
+  @objc(subscribe:successCallback:)
+  func subscribe(fallbackToSettings: Bool, successCallback: @escaping RCTResponseSenderBlock) {
+    FlareLane.subscribe(fallbackToSettings: fallbackToSettings) { isSubscribed in
+      successCallback([isSubscribed])
+    }
+  }
+
+  @objc func unsubscribe(_ successCallback: @escaping RCTResponseSenderBlock) {
+    FlareLane.unsubscribe() { isSubscribed in
+      successCallback([isSubscribed])
+    }
+  }
+
+  @objc func isSubscribed(_ successCallback: @escaping RCTResponseSenderBlock) {
+    FlareLane.isSubscribed() { isSubscribed in
+      successCallback([isSubscribed])
+    }
   }
 
   @objc func getDeviceId(_ successCallback: RCTResponseSenderBlock) {
-    successCallback([FlareLane.getDeviceId()])
+    successCallback([FlareLane.getDeviceId() as Any])
   }
 
   @objc(trackEvent:data:)

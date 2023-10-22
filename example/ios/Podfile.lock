@@ -20,9 +20,9 @@ PODS:
     - GoogleUtilities/Logger (~> 7.8)
   - FirebaseCoreExtension (10.7.0):
     - FirebaseCore (~> 10.0)
-  - FirebaseCoreInternal (10.13.0):
+  - FirebaseCoreInternal (10.16.0):
     - "GoogleUtilities/NSData+zlib (~> 7.8)"
-  - FirebaseInstallations (10.13.0):
+  - FirebaseInstallations (10.16.0):
     - FirebaseCore (~> 10.0)
     - GoogleUtilities/Environment (~> 7.8)
     - GoogleUtilities/UserDefaults (~> 7.8)
@@ -36,7 +36,7 @@ PODS:
     - GoogleUtilities/Reachability (~> 7.8)
     - GoogleUtilities/UserDefaults (~> 7.8)
     - nanopb (< 2.30910.0, >= 2.30908.0)
-  - FlareLane (1.3.2)
+  - FlareLane (1.4.0)
   - Folly (2020.01.13.00):
     - boost-for-react-native
     - DoubleConversion
@@ -73,16 +73,6 @@ PODS:
     - nanopb/encode (= 2.30909.0)
   - nanopb/decode (2.30909.0)
   - nanopb/encode (2.30909.0)
-  - OneSignalXCFramework (3.12.4):
-    - OneSignalXCFramework/OneSignalCore (= 3.12.4)
-    - OneSignalXCFramework/OneSignalExtension (= 3.12.4)
-    - OneSignalXCFramework/OneSignalOutcomes (= 3.12.4)
-  - OneSignalXCFramework/OneSignalCore (3.12.4)
-  - OneSignalXCFramework/OneSignalExtension (3.12.4):
-    - OneSignalXCFramework/OneSignalCore
-    - OneSignalXCFramework/OneSignalOutcomes
-  - OneSignalXCFramework/OneSignalOutcomes (3.12.4):
-    - OneSignalXCFramework/OneSignalCore
   - PromisesObjC (2.3.1)
   - RCTRequired (0.63.5)
   - RCTTypeSafety (0.63.5):
@@ -250,12 +240,9 @@ PODS:
     - React-cxxreact (= 0.63.5)
     - React-jsi (= 0.63.5)
   - React-jsinspector (0.63.5)
-  - react-native-flarelane (1.3.0):
-    - FlareLane (= 1.3.2)
+  - react-native-flarelane (1.4.0):
+    - FlareLane (= 1.4.0)
     - React-Core
-  - react-native-onesignal (4.5.1):
-    - OneSignalXCFramework (= 3.12.4)
-    - React (< 1.0.0, >= 0.13.0)
   - React-RCTActionSheet (0.63.5):
     - React-Core/RCTActionSheetHeaders (= 0.63.5)
   - React-RCTAnimation (0.63.5):
@@ -316,10 +303,10 @@ PODS:
     - React-Core (= 0.63.5)
     - React-cxxreact (= 0.63.5)
     - React-jsi (= 0.63.5)
-  - RNFBApp (17.4.2):
+  - RNFBApp (17.5.0):
     - Firebase/CoreOnly (= 10.7.0)
     - React-Core
-  - RNFBMessaging (17.4.2):
+  - RNFBMessaging (17.5.0):
     - Firebase/Messaging (= 10.7.0)
     - FirebaseCoreExtension (= 10.7.0)
     - React-Core
@@ -330,10 +317,9 @@ DEPENDENCIES:
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - FBLazyVector (from `../node_modules/react-native/Libraries/FBLazyVector`)
   - FBReactNativeSpec (from `../node_modules/react-native/Libraries/FBReactNativeSpec`)
-  - FlareLane
+  - FlareLane (= 1.4.0)
   - Folly (from `../node_modules/react-native/third-party-podspecs/Folly.podspec`)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
-  - OneSignalXCFramework (< 4.0, >= 3.0)
   - RCTRequired (from `../node_modules/react-native/Libraries/RCTRequired`)
   - RCTTypeSafety (from `../node_modules/react-native/Libraries/TypeSafety`)
   - React (from `../node_modules/react-native/`)
@@ -347,7 +333,6 @@ DEPENDENCIES:
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - react-native-flarelane (from `../..`)
-  - react-native-onesignal (from `../node_modules/react-native-onesignal`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
   - React-RCTAnimation (from `../node_modules/react-native/Libraries/NativeAnimation`)
   - React-RCTBlob (from `../node_modules/react-native/Libraries/Blob`)
@@ -375,7 +360,6 @@ SPEC REPOS:
     - GoogleDataTransport
     - GoogleUtilities
     - nanopb
-    - OneSignalXCFramework
     - PromisesObjC
 
 EXTERNAL SOURCES:
@@ -411,8 +395,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
   react-native-flarelane:
     :path: "../.."
-  react-native-onesignal:
-    :path: "../node_modules/react-native-onesignal"
   React-RCTActionSheet:
     :path: "../node_modules/react-native/Libraries/ActionSheetIOS"
   React-RCTAnimation:
@@ -448,16 +430,15 @@ SPEC CHECKSUMS:
   Firebase: 0219acf760880eeec8ce479895bd7767466d9f81
   FirebaseCore: e317665b9d744727a97e623edbbed009320afdd7
   FirebaseCoreExtension: f17247ba8c61e4d3c8d136b5e2de3cb4ac6a85b6
-  FirebaseCoreInternal: b342e37cd4f5b4454ec34308f073420e7920858e
-  FirebaseInstallations: b28af1b9f997f1a799efe818c94695a3728c352f
+  FirebaseCoreInternal: 26233f705cc4531236818a07ac84d20c333e505a
+  FirebaseInstallations: b822f91a61f7d1ba763e5ccc9d4f2e6f2ed3b3ee
   FirebaseMessaging: ac9062bcc35ed56e15a0241d8fd317022499baf8
-  FlareLane: 93cdce1496e1bcb349a36867c543d0b75b5702d8
+  FlareLane: da260fe6a05b77efdf043dbaf811b6cad6d369b7
   Folly: b73c3869541e86821df3c387eb0af5f65addfab4
   glog: 40a13f7840415b9a77023fbcae0f1e6f43192af3
   GoogleDataTransport: 54dee9d48d14580407f8f5fbf2f496e92437a2f2
   GoogleUtilities: 13e2c67ede716b8741c7989e26893d151b2b2084
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
-  OneSignalXCFramework: 087934ab0d4d7445fcf1c015c7c782359e26c020
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
   RCTRequired: 5520387431beaa5f32aa8726bf746cd5353119fe
   RCTTypeSafety: bc90d6e287fa427c50ed770922bac30faf0bbfa3
@@ -469,8 +450,7 @@ SPEC CHECKSUMS:
   React-jsi: 7d908b17758178b076a05a254523f1a4227b53d2
   React-jsiexecutor: e06a32e42affb2bd89e4c8369349b5fcf787710c
   React-jsinspector: fdbc08866b34ae8e1b788ea1cbd9f9d1ca2aa3d6
-  react-native-flarelane: 3ac3bf213dbd221cd556f0e704ace7ceb84ec346
-  react-native-onesignal: 7bd44dbd031d8d57110c0203836ffc37ddead526
+  react-native-flarelane: fc986bf106e4e2ee241543c694384004e7ecbb4c
   React-RCTActionSheet: e911b99f0d6fa7711ffc2f62d236b12a32771835
   React-RCTAnimation: ad8b853170a059faf31d6add34f67d22391bbe01
   React-RCTBlob: 134c7270b6672c9c05383b2e0f7f044ba39d7dda
@@ -481,10 +461,10 @@ SPEC CHECKSUMS:
   React-RCTText: 393f059d7ec02c733da57240694201e734f0dc84
   React-RCTVibration: 3e83f53610d63d3c1fc4db303305e934e73047cc
   ReactCommon: b9ff54b6dd22ba4a776eda22d7f83ec27544ca35
-  RNFBApp: 0f6bd7ee155a50f5e68cd68aab2709a4d24bfdff
-  RNFBMessaging: 5d1480ff1fa7fd8dfd5a1a7f0df35c709f75dd4e
+  RNFBApp: 0d8bf86673bbad0524d1ceac3944d71ccf48a0e4
+  RNFBMessaging: 4b8cb1215465bacca36d0fcfc2f51e7e2aa1bc91
   Yoga: 0276e9f20976c8568e107cfc1163a8629051adc0
 
-PODFILE CHECKSUM: 109da7e1bd34cd5d09fd849a35f0d6ca6c4283cb
+PODFILE CHECKSUM: 8a33e645437d2acd3c597ceb65c1dc8aef17b588
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.13.0

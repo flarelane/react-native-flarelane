@@ -1,7 +1,6 @@
 import FlareLane from '@flarelane/react-native-sdk';
 import * as React from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
-import OneSignal from 'react-native-onesignal';
 import type { Notification } from 'src/types';
 
 const tags = { age: 27, gender: 'men' };
@@ -15,9 +14,6 @@ export default function App() {
   React.useEffect(() => {
     setTimeout(() => {
       console.log('Set converted handler delayed');
-      OneSignal.setNotificationOpenedHandler((notification) => {
-        console.log('OneSignal: notification opened:', notification);
-      });
       // Executes a handler with notification data when notification is converted.
       FlareLane.setNotificationConvertedHandler((payload) => {
         // Do something...
@@ -32,7 +28,7 @@ export default function App() {
   };
 
   const toggleIsSubscribed = () => {
-    FlareLane.setIsSubscribed(isSubscribed);
+    FlareLane.setIsSubscribed(isSubscribed, console.log);
     setIsSubscribed(!isSubscribed);
   };
 
@@ -58,6 +54,18 @@ export default function App() {
     FlareLane.trackEvent('test_event', { react: 'native' });
   };
 
+  const subscribe = () => {
+    FlareLane.subscribe(true, console.log);
+  };
+
+  const unsubscribe = () => {
+    FlareLane.unsubscribe(console.log);
+  };
+
+  const isSubscribedFunc = () => {
+    FlareLane.isSubscribed(console.log);
+  };
+
   return (
     <View style={styles.container}>
       <Text>FlareLane Test</Text>
@@ -73,6 +81,9 @@ export default function App() {
       <Button onPress={getTags} title="GET TAGS" />
       <Button onPress={getDeviceId} title="GET DEVICE ID" />
       <Button onPress={trackEvent} title="TRACK EVENT" />
+      <Button onPress={subscribe} title="SUBSCRIBE" />
+      <Button onPress={unsubscribe} title="UNSUBSCRIBE" />
+      <Button onPress={isSubscribedFunc} title="ISSUBSCRIBED" />
     </View>
   );
 }

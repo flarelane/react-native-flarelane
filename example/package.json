@@ -12,8 +12,7 @@
     "@react-native-firebase/app": "^17.4.2",
     "@react-native-firebase/messaging": "^17.4.2",
     "react": "16.13.1",
-    "react-native": "0.63.5",
-    "react-native-onesignal": "4.5.1"
+    "react-native": "0.63.5"
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",

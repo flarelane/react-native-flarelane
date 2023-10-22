@@ -10,19 +10,28 @@ export interface Notification {
 }
 
 export type NotificationHandlerCallback = (payload: Notification) => void;
-
+export type IsSubscribedHandlerCallback = (isSubscribed: boolean) => void;
 export type Tags = Record<string, unknown>;
 export type EventData = Record<string, string | number> | null;
 
 export interface FlareLaneType {
   setLogLevel(level: number): void;
-  initialize(projectId: string): void;
+  initialize(projectId: string, requestPermissionOnLaunch?: boolean): void;
   setNotificationConvertedHandler: () => void;
   setUserId: (userId: string | null) => void;
   getTags: (callback: (tags: Tags | null) => void) => void;
   setTags: (tags: Tags) => void;
   deleteTags: (keys: string[]) => void;
-  setIsSubscribed: (isSubscribed: boolean) => void;
+  setIsSubscribed: (
+    isSubscribed: boolean,
+    callback: IsSubscribedHandlerCallback
+  ) => void;
+  subscribe: (
+    fallbackToSettings: boolean,
+    callback: IsSubscribedHandlerCallback
+  ) => void;
+  unsubscribe: (callback: IsSubscribedHandlerCallback) => void;
+  isSubscribed: (callback: (isSubscribed: boolean) => void) => void;
   getDeviceId: (callback: (id: string | null) => void) => void;
   trackEvent: (type: string, data: EventData) => void;
 }

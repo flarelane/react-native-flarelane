@@ -24,6 +24,7 @@ import com.flarelane.SdkType;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+
 import android.util.Log;
 
 
@@ -37,7 +38,7 @@ public class FlareLaneModule extends ReactContextBaseJavaModule {
     super(reactContext);
     mReactApplicationContext = reactContext;
     FlareLane.SdkInfo.type = SdkType.REACTNATIVE;
-    FlareLane.SdkInfo.version = "1.3.1";
+    FlareLane.SdkInfo.version = "1.4.0";
   }
 
   @Override
@@ -59,11 +60,11 @@ public class FlareLaneModule extends ReactContextBaseJavaModule {
   // ----- PUBLIC METHOD -----
 
   @ReactMethod
-  public void initialize(String projectId) {
+  public void initialize(String projectId, boolean requestPermissionOnLaunch) {
     try {
       context = mReactApplicationContext.getApplicationContext();
-      FlareLane.initWithContext(context, projectId);
-    } catch(Exception e) {
+      FlareLane.initWithContext(context, projectId, requestPermissionOnLaunch);
+    } catch (Exception e) {
       Log.e("FlareLane", Log.getStackTraceString(e));
     }
   }
@@ -74,7 +75,7 @@ public class FlareLaneModule extends ReactContextBaseJavaModule {
     FlareLane.setLogLevel(intLogLevel);
   }
 
-// ----- EVENT HANDLERS -----
+  // ----- EVENT HANDLERS -----
   @ReactMethod
   public void setNotificationConvertedHandler() {
     FlareLane.setNotificationConvertedHandler(new NotificationConvertedHandler() {
@@ -144,14 +145,68 @@ public class FlareLaneModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
-  public void setIsSubscribed(boolean isSubscribed) {
-    FlareLane.setIsSubscribed(context, isSubscribed);
+  public void setIsSubscribed(boolean isSubscribed, Callback callback) {
+    try {
+      FlareLane.setIsSubscribed(context, isSubscribed, new FlareLane.IsSubscribedHandler() {
+        @Override
+        public void onSuccess(boolean isSubscribed) {
+          if (callback != null)
+            callback.invoke(isSubscribed);
+        }
+      });
+    } catch (Exception e) {
+      Log.e("FlareLane", Log.getStackTraceString(e));
+    }
+  }
+
+  @ReactMethod
+  public void subscribe(boolean fallbackToSettings, Callback callback) {
+    try {
+      FlareLane.subscribe(context, fallbackToSettings, new FlareLane.IsSubscribedHandler() {
+        @Override
+        public void onSuccess(boolean isSubscribed) {
+          if (callback != null)
+            callback.invoke(isSubscribed);
+        }
+      });
+    } catch (Exception e) {
+      Log.e("FlareLane", Log.getStackTraceString(e));
+    }
+  }
+
+  @ReactMethod
+  public void unsubscribe(Callback callback) {
+    try {
+      FlareLane.unsubscribe(context, new FlareLane.IsSubscribedHandler() {
+        @Override
+        public void onSuccess(boolean isSubscribed) {
+          if (callback != null)
+            callback.invoke(isSubscribed);
+        }
+      });
+    } catch (Exception e) {
+      Log.e("FlareLane", Log.getStackTraceString(e));
+    }
+  }
+
+  @ReactMethod
+  public void isSubscribed(Callback callback) {
+    try {
+      boolean isSubscribed = FlareLane.isSubscribed(context);
+      callback.invoke(isSubscribed);
+    } catch (Exception e) {
+      Log.e("FlareLane", Log.getStackTraceString(e));
+    }
   }
 
   @ReactMethod
   public void getDeviceId(Callback callback) {
-    String deviceId = FlareLane.getDeviceId(context);
-    callback.invoke(deviceId);
+    try {
+      String deviceId = FlareLane.getDeviceId(context);
+      callback.invoke(deviceId);
+    } catch (Exception e) {
+      Log.e("FlareLane", Log.getStackTraceString(e));
+    }
   }
 
   @ReactMethod

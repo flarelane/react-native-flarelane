@@ -3,6 +3,7 @@ import FlareLaneEventManager from './eventManager';
 import type {
   EventData,
   FlareLaneType,
+  IsSubscribedHandlerCallback,
   LogLevel,
   NotificationHandlerCallback,
   Tags,
@@ -40,12 +41,15 @@ class FlareLane {
     }
   }
 
-  static initialize(projectId: string) {
+  static initialize(
+    projectId: string,
+    requestPermissionOnLaunch: boolean = true
+  ) {
     if (!isString(projectId, this.name)) return;
 
     try {
       console.log(`FlareLane - Initiallize with project id. [${projectId}]`);
-      FlareLaneNativeModule.initialize(projectId);
+      FlareLaneNativeModule.initialize(projectId, requestPermissionOnLaunch);
     } catch (error: any) {
       publicMethodErrorHandler(error, this.name);
     }
@@ -102,12 +106,65 @@ class FlareLane {
     }
   }
 
-  static setIsSubscribed(isSubscribed: boolean) {
+  static setIsSubscribed(
+    isSubscribed: boolean,
+    callback?: IsSubscribedHandlerCallback
+  ) {
     if (!isBoolean(isSubscribed, this.name)) return;
+    if (callback && !isValidCallback(callback, this.name)) return;
 
     try {
       console.log(`FlareLane - Set is subscribed`);
-      FlareLaneNativeModule.setIsSubscribed(isSubscribed);
+      FlareLaneNativeModule.setIsSubscribed(
+        isSubscribed,
+        (_isSubscribed: boolean) => {
+          if (callback) callback(_isSubscribed);
+        }
+      );
+    } catch (error: any) {
+      publicMethodErrorHandler(error, this.name);
+    }
+  }
+
+  static subscribe(
+    fallbackToSettings: boolean,
+    callback?: IsSubscribedHandlerCallback
+  ) {
+    if (fallbackToSettings && !isBoolean(fallbackToSettings, this.name)) return;
+    if (callback && !isValidCallback(callback, this.name)) return;
+
+    try {
+      console.log(`FlareLane - Subscribe`);
+      FlareLaneNativeModule.subscribe(
+        fallbackToSettings,
+        (_isSubscribed: boolean) => {
+          if (callback) callback(_isSubscribed);
+        }
+      );
+    } catch (error: any) {
+      publicMethodErrorHandler(error, this.name);
+    }
+  }
+
+  static unsubscribe(callback?: IsSubscribedHandlerCallback) {
+    if (callback && !isValidCallback(callback, this.name)) return;
+
+    try {
+      console.log(`FlareLane - Unsubscribe`);
+      FlareLaneNativeModule.unsubscribe((_isSubscribed: boolean) => {
+        if (callback) callback(_isSubscribed);
+      });
+    } catch (error: any) {
+      publicMethodErrorHandler(error, this.name);
+    }
+  }
+
+  static isSubscribed(callback: IsSubscribedHandlerCallback) {
+    if (!isValidCallback(callback, this.name)) return;
+
+    try {
+      console.log(`FlareLane - IsSubscribed`);
+      FlareLaneNativeModule.isSubscribed(callback);
     } catch (error: any) {
       publicMethodErrorHandler(error, this.name);
     }
