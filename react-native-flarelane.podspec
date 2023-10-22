@@ -10,11 +10,11 @@ Pod::Spec.new do |s|
   s.license      = package["license"]
   s.authors      = package["author"]
 
-  s.platforms    = { :ios => "11.0" }
+  s.platforms    = { :ios => "12.0" }
   s.source       = { :git => "https://github.com/flarelane/react-native-flarelane.git", :tag => "#{s.version}" }
 
   s.source_files = "ios/**/*.{h,m,mm,swift}"
 
-  s.dependency "FlareLane", '1.3.2'
+  s.dependency "FlareLane", '1.4.0'
   s.dependency "React-Core"
 end

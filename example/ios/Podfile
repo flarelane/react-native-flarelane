@@ -1,7 +1,7 @@
 require_relative '../node_modules/react-native/scripts/react_native_pods'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
-platform :ios, '11.0'
+platform :ios, '12.0'
 use_frameworks!
 
 target 'FlareLaneExample' do
@@ -10,7 +10,6 @@ target 'FlareLaneExample' do
   use_react_native!(:path => config["reactNativePath"])
 
   pod 'react-native-flarelane', :path => '../..'
-  pod 'FlareLane', git: 'https://github.com/flarelane/FlareLane-iOS-SDK.git', branch: 'add/disable-initial-prompt'
 
   # Enables Flipper.
   #
@@ -23,6 +22,5 @@ target 'FlareLaneExample' do
 end
 
 target 'FlareLaneNotificationServiceExtension' do
-  pod 'FlareLane', git: 'https://github.com/flarelane/FlareLane-iOS-SDK.git', branch: 'add/disable-initial-prompt'
-  # pod 'OneSignalXCFramework', '>= 5.0.0', '< 6.0'
+  pod 'FlareLane', '1.4.0'
 end

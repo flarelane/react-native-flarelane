@@ -6,7 +6,6 @@
 //
 
 import UserNotifications
-//import OneSignalExtension
 import FlareLane
 
 class NotificationService: UNNotificationServiceExtension {
@@ -19,22 +18,11 @@ class NotificationService: UNNotificationServiceExtension {
     if FlareLaneNotificationServiceExtensionHelper.shared.isFlareLaneNotification(request) {
       FlareLaneNotificationServiceExtensionHelper.shared.didReceive(request, withContentHandler: contentHandler)
     } else {
-      self.receivedRequest = request
-      self.contentHandler = contentHandler
-      self.bestAttemptContent = (request.content.mutableCopy() as? UNMutableNotificationContent)
-      
-      if let bestAttemptContent = bestAttemptContent {
-//        OneSignalExtension.didReceiveNotificationExtensionRequest(self.receivedRequest, with: bestAttemptContent, withContentHandler: self.contentHandler)
-      }
     }
   }
   
   override func serviceExtensionTimeWillExpire() {
     FlareLaneNotificationServiceExtensionHelper.shared.serviceExtensionTimeWillExpire()
-//    if let contentHandler = contentHandler, let bestAttemptContent =  bestAttemptContent {
-//      OneSignalExtension.serviceExtensionTimeWillExpireRequest(self.receivedRequest, with: self.bestAttemptContent)
-//      contentHandler(bestAttemptContent)
-//    }
   }
   
 }

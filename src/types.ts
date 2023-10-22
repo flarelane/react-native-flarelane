@@ -10,7 +10,7 @@ export interface Notification {
 }
 
 export type NotificationHandlerCallback = (payload: Notification) => void;
-export type SubscribeHandlerCallback = (isSubscribed: boolean) => void;
+export type IsSubscribedHandlerCallback = (isSubscribed: boolean) => void;
 export type Tags = Record<string, unknown>;
 export type EventData = Record<string, string | number> | null;
 
@@ -24,13 +24,13 @@ export interface FlareLaneType {
   deleteTags: (keys: string[]) => void;
   setIsSubscribed: (
     isSubscribed: boolean,
-    callback: SubscribeHandlerCallback
+    callback: IsSubscribedHandlerCallback
   ) => void;
   subscribe: (
     fallbackToSettings: boolean,
-    callback: SubscribeHandlerCallback
+    callback: IsSubscribedHandlerCallback
   ) => void;
-  unsubscribe: (callback: SubscribeHandlerCallback) => void;
+  unsubscribe: (callback: IsSubscribedHandlerCallback) => void;
   isSubscribed: (callback: (isSubscribed: boolean) => void) => void;
   getDeviceId: (callback: (id: string | null) => void) => void;
   trackEvent: (type: string, data: EventData) => void;

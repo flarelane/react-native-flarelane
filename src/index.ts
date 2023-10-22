@@ -3,9 +3,9 @@ import FlareLaneEventManager from './eventManager';
 import type {
   EventData,
   FlareLaneType,
+  IsSubscribedHandlerCallback,
   LogLevel,
   NotificationHandlerCallback,
-  SubscribeHandlerCallback,
   Tags,
 } from './types';
 import {
@@ -108,7 +108,7 @@ class FlareLane {
 
   static setIsSubscribed(
     isSubscribed: boolean,
-    callback?: SubscribeHandlerCallback
+    callback?: IsSubscribedHandlerCallback
   ) {
     if (!isBoolean(isSubscribed, this.name)) return;
     if (callback && !isValidCallback(callback, this.name)) return;
@@ -127,8 +127,8 @@ class FlareLane {
   }
 
   static subscribe(
-    fallbackToSettings: boolean = true,
-    callback?: SubscribeHandlerCallback
+    fallbackToSettings: boolean,
+    callback?: IsSubscribedHandlerCallback
   ) {
     if (fallbackToSettings && !isBoolean(fallbackToSettings, this.name)) return;
     if (callback && !isValidCallback(callback, this.name)) return;
@@ -146,7 +146,7 @@ class FlareLane {
     }
   }
 
-  static unsubscribe(callback?: SubscribeHandlerCallback) {
+  static unsubscribe(callback?: IsSubscribedHandlerCallback) {
     if (callback && !isValidCallback(callback, this.name)) return;
 
     try {
@@ -159,7 +159,7 @@ class FlareLane {
     }
   }
 
-  static isSubscribed(callback: (isSubscribed: boolean) => void) {
+  static isSubscribed(callback: IsSubscribedHandlerCallback) {
     if (!isValidCallback(callback, this.name)) return;
 
     try {
