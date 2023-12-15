@@ -23,7 +23,7 @@ export default function App() {
   }, []);
 
   const toggleUserId = () => {
-    FlareLane.setUserId(isSetUserId ? null : 'myuser@flarelane.com');
+    FlareLane.setUserId(isSetUserId ? null : 'TEST_USER_ID');
     setIsSetUserId(!isSetUserId);
   };
 
