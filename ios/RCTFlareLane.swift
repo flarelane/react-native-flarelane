@@ -52,8 +52,10 @@ class RCTFlareLane: RCTEventEmitter {
 
   @objc(displayNotification:)
   func displayNotification(notificationId: String) {
-    if let event = self.notificationEventCache[notificationId] {
-      event.display()
+    DispatchQueue.main.async {
+      if let event = self.notificationEventCache[notificationId] {
+        event.display()
+      }
     }
   }
 
