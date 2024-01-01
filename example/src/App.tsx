@@ -8,28 +8,30 @@ const tags = { age: 27, gender: 'men' };
 export default function App() {
   const [text, setText] = React.useState<Notification>();
   const [isSetUserId, setIsSetUserId] = React.useState<boolean>(false);
-  const [isSubscribed, setIsSubscribed] = React.useState<boolean>(false);
   const [isSetTags, setIsSetTags] = React.useState<boolean>(false);
 
   React.useEffect(() => {
-    setTimeout(() => {
-      console.log('Set converted handler delayed');
-      // Executes a handler with notification data when notification is converted.
-      FlareLane.setNotificationConvertedHandler((payload) => {
-        // Do something...
-        setText(payload); // Example code
-      });
-    }, 2000);
+    FlareLane.setNotificationClickedHandler((payload) => {
+      // Do something...
+      setText(payload); // Example code
+    });
+
+    FlareLane.setNotificationForegroundReceivedHandler((event) => {
+      setText(event.notification);
+
+      setTimeout(() => {
+        if (event.notification.data?.dismiss_foreground_notification === 'true')
+          return;
+
+        console.log('Execute event.display() delayed');
+        event.display();
+      }, 3000);
+    });
   }, []);
 
   const toggleUserId = () => {
     FlareLane.setUserId(isSetUserId ? null : 'TEST_USER_ID');
     setIsSetUserId(!isSetUserId);
-  };
-
-  const toggleIsSubscribed = () => {
-    FlareLane.setIsSubscribed(isSubscribed, console.log);
-    setIsSubscribed(!isSubscribed);
   };
 
   const toggleTags = () => {
@@ -76,7 +78,6 @@ export default function App() {
       <Text>Notification imageUrl: {text?.imageUrl}</Text>
       <Text>Notification data: {JSON.stringify(text?.data)}</Text>
       <Button onPress={toggleUserId} title="TOGGLE USER ID" />
-      <Button onPress={toggleIsSubscribed} title="TOGGLE IS SUBSCRIBED" />
       <Button onPress={toggleTags} title="TOGGLE TAGS" />
       <Button onPress={getTags} title="GET TAGS" />
       <Button onPress={getDeviceId} title="GET DEVICE ID" />

@@ -3,12 +3,14 @@ import FlareLane
 @objc(RCTFlareLane)
 class RCTFlareLane: RCTEventEmitter {
   public static var emitter: RCTEventEmitter!
-  var notificationConvertedEventKey: String = "FlareLane-NotificationConverted"
+  var notificationClickedEventKey: String = "FlareLane-NotificationClickedCallback"
+  var notificationForegroundReceivedEventKey: String = "FlareLane-NotificationForegroundReceivedCallback"
+  var notificationEventCache = [String: FlareLaneNotificationReceivedEvent]()
 
   override init() {
     super.init()
     RCTFlareLane.emitter = self
-    FlareLane.setSdkInfo(sdkType: .reactnative, sdkVersion: "1.4.1")
+    FlareLane.setSdkInfo(sdkType: .reactnative, sdkVersion: "1.5.0")
   }
 
   // ----- PUBLIC METHOD -----
@@ -28,18 +30,30 @@ class RCTFlareLane: RCTEventEmitter {
   }
 
   // ----- EVENT HANDLERS -----
-  @objc func setNotificationConvertedHandler() {
-    FlareLane.setNotificationConvertedHandler() { payload in
-      let notificationDictionary: [String: Optional<Any>] = [
-        "id": payload.id,
-        "title": payload.title,
-        "body": payload.body,
-        "url": payload.url,
-        "imageUrl": payload.imageUrl,
-        "data": payload.data
-      ]
+  @objc func setNotificationClickedHandler() {
+    FlareLane.setNotificationClickedHandler() { notification in
+      RCTFlareLane.emitter.sendEvent(
+        withName: self.notificationClickedEventKey,
+        body: notification.toDictionary()
+      )
+    }
+  }
 
-      RCTFlareLane.emitter.sendEvent(withName: self.notificationConvertedEventKey, body: notificationDictionary)
+  @objc func setNotificationForegroundReceivedHandler() {
+    FlareLane.setNotificationForegroundReceivedHandler() { event in
+      self.notificationEventCache[event.notification.id] = event
+
+      RCTFlareLane.emitter.sendEvent(
+        withName: self.notificationForegroundReceivedEventKey,
+        body: event.notification.toDictionary()
+      )
+    }
+  }
+
+  @objc(displayNotification:)
+  func displayNotification(notificationId: String) {
+    if let event = self.notificationEventCache[notificationId] {
+      event.display()
     }
   }
 
@@ -65,15 +79,6 @@ class RCTFlareLane: RCTEventEmitter {
   func deleteTags(keys: [String]) {
     FlareLane.deleteTags(keys: keys)
   }
-
-  // Deprecated
-  @objc(setIsSubscribed:successCallback:)
-  func setIsSubscribed(isSubscribed: Bool, successCallback: @escaping RCTResponseSenderBlock) {
-    FlareLane.setIsSubscribed(isSubscribed: isSubscribed) { isSubscribed in
-      successCallback([isSubscribed])
-    }
-  }
-
 
   @objc(subscribe:successCallback:)
   func subscribe(fallbackToSettings: Bool, successCallback: @escaping RCTResponseSenderBlock) {
@@ -106,7 +111,7 @@ class RCTFlareLane: RCTEventEmitter {
   // ----- SDK SETTINGS -----
 
   override open func supportedEvents() -> [String] {
-    return [self.notificationConvertedEventKey]
+    return [self.notificationClickedEventKey, self.notificationForegroundReceivedEventKey]
   }
 
   override static func requiresMainQueueSetup() -> Bool {

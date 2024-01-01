@@ -12,7 +12,11 @@ RCT_EXTERN_METHOD(initialize:
                     requestPermissionOnLaunch: (BOOL)requestPermissionOnLaunch
 )
 
-RCT_EXTERN_METHOD(setNotificationConvertedHandler)
+RCT_EXTERN_METHOD(setNotificationClickedHandler)
+
+RCT_EXTERN_METHOD(setNotificationForegroundReceivedHandler)
+
+RCT_EXTERN_METHOD(displayNotification:(NSString)notificationId)
 
 RCT_EXTERN_METHOD(setUserId:
                     (NSString)userId
@@ -26,11 +30,6 @@ RCT_EXTERN_METHOD(setTags:
 
 RCT_EXTERN_METHOD(deleteTags:
                     (NSArray)keys
-)
-
-RCT_EXTERN_METHOD(setIsSubscribed:
-                    (BOOL)isSubscribed
-                    successCallback: (RCTResponseSenderBlock *)successCallback
 )
 
 RCT_EXTERN_METHOD(subscribe:
