@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">FlareLane Example</string>
+    <string name="flarelane_notification_accent_color">#30fc03</string>
+    <string name="flarelane_default_channel_name">My React Native Channel</string>
 </resources>

@@ -17,13 +17,15 @@ import com.facebook.react.bridge.Callback;
 
 import com.flarelane.FlareLane;
 import com.flarelane.Notification;
-import com.flarelane.NotificationConvertedHandler;
-import com.flarelane.NotificationManager;
+import com.flarelane.NotificationClickedHandler;
+import com.flarelane.NotificationForegroundReceivedHandler;
+import com.flarelane.NotificationReceivedEvent;
 import com.flarelane.SdkType;
 
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import android.util.Log;
 
@@ -33,12 +35,13 @@ public class FlareLaneModule extends ReactContextBaseJavaModule {
   public static final String NAME = "FlareLane";
   private ReactApplicationContext mReactApplicationContext;
   private Context context;
+  private HashMap<String, NotificationReceivedEvent> notificationEventCache = new HashMap<String, NotificationReceivedEvent>();
 
   public FlareLaneModule(ReactApplicationContext reactContext) {
     super(reactContext);
     mReactApplicationContext = reactContext;
     FlareLane.SdkInfo.type = SdkType.REACTNATIVE;
-    FlareLane.SdkInfo.version = "1.4.1";
+    FlareLane.SdkInfo.version = "1.5.0";
   }
 
   @Override
@@ -51,10 +54,6 @@ public class FlareLaneModule extends ReactContextBaseJavaModule {
 
   public static void setNotificationIcon(int notificationIcon) {
     FlareLane.setNotificationIcon(notificationIcon);
-  }
-
-  public static void setAccentColor(String accentColor) {
-    NotificationManager.accentColor = accentColor;
   }
 
   // ----- PUBLIC METHOD -----
@@ -77,26 +76,34 @@ public class FlareLaneModule extends ReactContextBaseJavaModule {
 
   // ----- EVENT HANDLERS -----
   @ReactMethod
-  public void setNotificationConvertedHandler() {
-    FlareLane.setNotificationConvertedHandler(new NotificationConvertedHandler() {
-
+  public void setNotificationClickedHandler() {
+    FlareLane.setNotificationClickedHandler(new NotificationClickedHandler() {
       @Override
-      public void onConverted(Notification notification) {
-        Log.v("FlareLane", "Send convert event via headless");
-
-        Intent service = new Intent(context.getApplicationContext(), FlareLaneNotificationConvertedService.class);
-        Bundle bundle = new Bundle();
-        bundle.putString("id", notification.id);
-        bundle.putString("title", notification.title);
-        bundle.putString("body", notification.body);
-        bundle.putString("url", notification.url);
-        bundle.putString("imageUrl", notification.imageUrl);
-        bundle.putString("data", notification.data);
-
-        service.putExtras(bundle);
+      public void onClicked(Notification notification) {
+        Intent service = new Intent(context.getApplicationContext(), FlareLaneNotificationClickedService.class);
+        service.putExtras(notification.toBundle());
         context.startService(service);
       }
     });
+  }
+
+  @ReactMethod
+  public void setNotificationForegroundReceivedHandler() {
+    FlareLane.setNotificationForegroundReceivedHandler(new NotificationForegroundReceivedHandler() {
+      @Override
+      public void onWillDisplay(NotificationReceivedEvent notificationReceivedEvent) {
+        notificationEventCache.put(notificationReceivedEvent.getNotification().id, notificationReceivedEvent);
+        Intent service = new Intent(context.getApplicationContext(), FlareLaneNotificationForegroundReceivedService.class);
+        service.putExtras(notificationReceivedEvent.getNotification().toBundle());
+        context.startService(service);
+      }
+    });
+  }
+
+  @ReactMethod
+  public void displayNotification(String notificationId) {
+    NotificationReceivedEvent event = notificationEventCache.get(notificationId);
+    if (event != null) event.display();
   }
 
   // ----- SET DEVICE META DATA -----
@@ -139,21 +146,6 @@ public class FlareLaneModule extends ReactContextBaseJavaModule {
     try {
       ArrayList arrayListTags = tags.toArrayList();
       FlareLane.deleteTags(context, arrayListTags);
-    } catch (Exception e) {
-      Log.e("FlareLane", Log.getStackTraceString(e));
-    }
-  }
-
-  @ReactMethod
-  public void setIsSubscribed(boolean isSubscribed, Callback callback) {
-    try {
-      FlareLane.setIsSubscribed(context, isSubscribed, new FlareLane.IsSubscribedHandler() {
-        @Override
-        public void onSuccess(boolean isSubscribed) {
-          if (callback != null)
-            callback.invoke(isSubscribed);
-        }
-      });
     } catch (Exception e) {
       Log.e("FlareLane", Log.getStackTraceString(e));
     }

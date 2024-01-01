@@ -11,5 +11,7 @@ export const androidLogLevel = {
 };
 
 export const events = {
-  NOTIFICATION_CONVERTED: 'FlareLane-NotificationConverted',
+  NOTIFICATION_CLICKED: 'FlareLane-NotificationClickedCallback',
+  NOTIFICATION_FOREGROUND_RECEIVED:
+    'FlareLane-NotificationForegroundReceivedCallback',
 };

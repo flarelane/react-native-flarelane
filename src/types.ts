@@ -1,3 +1,5 @@
+import type { NotificationReceivedEvent } from './notificationReceivedEvent';
+
 export type LogLevel = 'none' | 'error' | 'verbose';
 
 export interface Notification {
@@ -10,6 +12,9 @@ export interface Notification {
 }
 
 export type NotificationHandlerCallback = (payload: Notification) => void;
+export type NotificationForegroundReceivedHandler = (
+  payload: NotificationReceivedEvent
+) => void;
 export type IsSubscribedHandlerCallback = (isSubscribed: boolean) => void;
 export type Tags = Record<string, unknown>;
 export type EventData = Record<string, string | number> | null;
@@ -17,15 +22,13 @@ export type EventData = Record<string, string | number> | null;
 export interface FlareLaneType {
   setLogLevel(level: number): void;
   initialize(projectId: string, requestPermissionOnLaunch?: boolean): void;
-  setNotificationConvertedHandler: () => void;
+  setNotificationClickedHandler: () => void;
+  setNotificationForegroundReceivedHandler: () => void;
+  displayNotification: (notificationId: string) => void;
   setUserId: (userId: string | null) => void;
   getTags: (callback: (tags: Tags | null) => void) => void;
   setTags: (tags: Tags) => void;
   deleteTags: (keys: string[]) => void;
-  setIsSubscribed: (
-    isSubscribed: boolean,
-    callback: IsSubscribedHandlerCallback
-  ) => void;
   subscribe: (
     fallbackToSettings: boolean,
     callback: IsSubscribedHandlerCallback

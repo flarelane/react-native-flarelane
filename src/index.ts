@@ -1,10 +1,12 @@
 import { NativeModules } from 'react-native';
 import FlareLaneEventManager from './eventManager';
+import { NotificationReceivedEvent } from './notificationReceivedEvent';
 import type {
   EventData,
   FlareLaneType,
   IsSubscribedHandlerCallback,
   LogLevel,
+  NotificationForegroundReceivedHandler,
   NotificationHandlerCallback,
   Tags,
 } from './types';
@@ -57,15 +59,37 @@ class FlareLane {
 
   // ----- EVENT HANDLERS -----
 
-  static setNotificationConvertedHandler(
-    callback: NotificationHandlerCallback
+  static setNotificationClickedHandler(callback: NotificationHandlerCallback) {
+    if (!isValidCallback(callback, this.name, true)) return;
+
+    try {
+      eventManager.setNotificationClickedHandler(callback);
+      FlareLaneNativeModule.setNotificationClickedHandler();
+      console.log(
+        `FlareLane - NotificationClickedHandler has been registered.`
+      );
+    } catch (error: any) {
+      publicMethodErrorHandler(error, this.name);
+    }
+  }
+
+  static setNotificationForegroundReceivedHandler(
+    callback: NotificationForegroundReceivedHandler
   ) {
     if (!isValidCallback(callback, this.name, true)) return;
 
     try {
-      console.log(`FlareLane - Set notification converted handler.`);
-      eventManager.setNotificationConvertedHandler(callback);
-      FlareLaneNativeModule.setNotificationConvertedHandler();
+      eventManager.setNotificationForegroundReceivedHandler((notification) => {
+        const event = new NotificationReceivedEvent(
+          FlareLaneNativeModule,
+          notification
+        );
+        callback(event);
+      });
+      FlareLaneNativeModule.setNotificationForegroundReceivedHandler();
+      console.log(
+        `FlareLane - NotificationForegroundReceivedHandler has been registered.`
+      );
     } catch (error: any) {
       publicMethodErrorHandler(error, this.name);
     }
@@ -101,26 +125,6 @@ class FlareLane {
     try {
       console.log(`FlareLane - Delete tags`);
       FlareLaneNativeModule.deleteTags(keys);
-    } catch (error: any) {
-      publicMethodErrorHandler(error, this.name);
-    }
-  }
-
-  static setIsSubscribed(
-    isSubscribed: boolean,
-    callback?: IsSubscribedHandlerCallback
-  ) {
-    if (!isBoolean(isSubscribed, this.name)) return;
-    if (callback && !isValidCallback(callback, this.name)) return;
-
-    try {
-      console.log(`FlareLane - Set is subscribed`);
-      FlareLaneNativeModule.setIsSubscribed(
-        isSubscribed,
-        (_isSubscribed: boolean) => {
-          if (callback) callback(_isSubscribed);
-        }
-      );
     } catch (error: any) {
       publicMethodErrorHandler(error, this.name);
     }
