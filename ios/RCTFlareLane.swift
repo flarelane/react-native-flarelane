@@ -66,20 +66,9 @@ class RCTFlareLane: RCTEventEmitter {
     FlareLane.setUserId(userId: userId)
   }
 
-  @objc func getTags(_ successCallback: @escaping RCTResponseSenderBlock) {
-    FlareLane.getTags() { tags in
-      successCallback([tags as Any])
-    }
-  }
-
   @objc(setTags:)
   func setTags(tags: [String: Any]) {
     FlareLane.setTags(tags: tags)
-  }
-
-  @objc(deleteTags:)
-  func deleteTags(keys: [String]) {
-    FlareLane.deleteTags(keys: keys)
   }
 
   @objc(subscribe:successCallback:)

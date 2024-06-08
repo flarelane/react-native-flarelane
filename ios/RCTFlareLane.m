@@ -22,14 +22,8 @@ RCT_EXTERN_METHOD(setUserId:
                     (NSString)userId
 )
 
-RCT_EXTERN_METHOD(getTags: (RCTResponseSenderBlock *)successCallback)
-
 RCT_EXTERN_METHOD(setTags:
                     (NSDictionary)tags
-)
-
-RCT_EXTERN_METHOD(deleteTags:
-                    (NSArray)keys
 )
 
 RCT_EXTERN_METHOD(subscribe:

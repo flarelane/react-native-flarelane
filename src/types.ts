@@ -26,9 +26,7 @@ export interface FlareLaneType {
   setNotificationForegroundReceivedHandler: () => void;
   displayNotification: (notificationId: string) => void;
   setUserId: (userId: string | null) => void;
-  getTags: (callback: (tags: Tags | null) => void) => void;
   setTags: (tags: Tags) => void;
-  deleteTags: (keys: string[]) => void;
   subscribe: (
     fallbackToSettings: boolean,
     callback: IsSubscribedHandlerCallback

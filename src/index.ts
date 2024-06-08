@@ -183,10 +183,6 @@ class FlareLane {
       });
     });
   }
-
-  static getTags(getTagsHandler: (tags: Tags | null) => any) {
-    FlareLaneNativeModule.getTags(getTagsHandler);
-  }
 }
 
 export default FlareLane;

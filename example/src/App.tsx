@@ -42,10 +42,6 @@ export default function App() {
     }
   };
 
-  const getTags = async () => {
-    FlareLane.getTags(console.log);
-  };
-
   const getDeviceId = async () => {
     console.log(await FlareLane.getDeviceId());
   };
@@ -77,7 +73,6 @@ export default function App() {
       <Text>Notification data: {JSON.stringify(text?.data)}</Text>
       <Button onPress={toggleUserId} title="TOGGLE USER ID" />
       <Button onPress={toggleTags} title="TOGGLE TAGS" />
-      <Button onPress={getTags} title="GET TAGS" />
       <Button onPress={getDeviceId} title="GET DEVICE ID" />
       <Button onPress={trackEvent} title="TRACK EVENT" />
       <Button onPress={subscribe} title="SUBSCRIBE" />
