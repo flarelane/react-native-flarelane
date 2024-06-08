@@ -12,7 +12,6 @@ import type {
 } from './types';
 import {
   convertLogLevel,
-  isArray,
   isBoolean,
   isPlainObject,
   isString,
@@ -114,17 +113,6 @@ class FlareLane {
     try {
       console.log(`FlareLane - Set tags`);
       FlareLaneNativeModule.setTags(tags);
-    } catch (error: any) {
-      publicMethodErrorHandler(error, this.name);
-    }
-  }
-
-  static deleteTags(keys: string[]) {
-    if (!isArray(keys, this.name)) return;
-
-    try {
-      console.log(`FlareLane - Delete tags`);
-      FlareLaneNativeModule.deleteTags(keys);
     } catch (error: any) {
       publicMethodErrorHandler(error, this.name);
     }
