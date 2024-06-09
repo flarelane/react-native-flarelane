@@ -22,5 +22,5 @@ target 'FlareLaneExample' do
 end
 
 target 'FlareLaneNotificationServiceExtension' do
-  pod 'FlareLane', '1.6.0'
+  pod 'FlareLane', '1.6.3'
 end

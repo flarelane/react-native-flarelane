@@ -3,8 +3,6 @@ import * as React from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
 import type { Notification } from 'src/types';
 
-const tags = { age: 27, gender: 'men' };
-
 export default function App() {
   const [text, setText] = React.useState<Notification>();
   const [isSetUserId, setIsSetUserId] = React.useState<boolean>(false);
@@ -36,16 +34,12 @@ export default function App() {
 
   const toggleTags = () => {
     if (!isSetTags) {
-      FlareLane.setTags(tags);
+      FlareLane.setTags({ age: 27, gender: 'men' });
       setIsSetTags(true);
     } else {
-      FlareLane.deleteTags(Object.keys(tags));
+      FlareLane.setTags({ age: null, gender: null });
       setIsSetTags(false);
     }
-  };
-
-  const getTags = async () => {
-    FlareLane.getTags(console.log);
   };
 
   const getDeviceId = async () => {
@@ -79,7 +73,6 @@ export default function App() {
       <Text>Notification data: {JSON.stringify(text?.data)}</Text>
       <Button onPress={toggleUserId} title="TOGGLE USER ID" />
       <Button onPress={toggleTags} title="TOGGLE TAGS" />
-      <Button onPress={getTags} title="GET TAGS" />
       <Button onPress={getDeviceId} title="GET DEVICE ID" />
       <Button onPress={trackEvent} title="TRACK EVENT" />
       <Button onPress={subscribe} title="SUBSCRIBE" />

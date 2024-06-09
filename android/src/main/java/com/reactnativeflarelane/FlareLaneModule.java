@@ -41,7 +41,7 @@ public class FlareLaneModule extends ReactContextBaseJavaModule {
     super(reactContext);
     mReactApplicationContext = reactContext;
     FlareLane.SdkInfo.type = SdkType.REACTNATIVE;
-    FlareLane.SdkInfo.version = "1.6.0";
+    FlareLane.SdkInfo.version = "1.6.1";
   }
 
   @Override
@@ -114,38 +114,10 @@ public class FlareLaneModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
-  public void getTags(Callback callback) {
-    try {
-      FlareLane.getTags(context, new FlareLane.GetTagsHandler() {
-        @Override
-        public void onReceiveTags(JSONObject tags) {
-          try {
-            callback.invoke(Utils.convertJsonToMap(tags));
-          } catch (Exception e) {
-            Log.e("FlareLane", Log.getStackTraceString(e));
-          }
-        }
-      });
-    } catch (Exception e) {
-      Log.e("FlareLane", Log.getStackTraceString(e));
-    }
-  }
-
-  @ReactMethod
   public void setTags(ReadableMap tags) {
     try {
       JSONObject jsonObjectTags = new JSONObject(tags.toHashMap());
       FlareLane.setTags(context, jsonObjectTags);
-    } catch (Exception e) {
-      Log.e("FlareLane", Log.getStackTraceString(e));
-    }
-  }
-
-  @ReactMethod
-  public void deleteTags(ReadableArray tags) {
-    try {
-      ArrayList arrayListTags = tags.toArrayList();
-      FlareLane.deleteTags(context, arrayListTags);
     } catch (Exception e) {
       Log.e("FlareLane", Log.getStackTraceString(e));
     }

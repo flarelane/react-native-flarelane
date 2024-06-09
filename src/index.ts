@@ -12,7 +12,6 @@ import type {
 } from './types';
 import {
   convertLogLevel,
-  isArray,
   isBoolean,
   isPlainObject,
   isString,
@@ -119,17 +118,6 @@ class FlareLane {
     }
   }
 
-  static deleteTags(keys: string[]) {
-    if (!isArray(keys, this.name)) return;
-
-    try {
-      console.log(`FlareLane - Delete tags`);
-      FlareLaneNativeModule.deleteTags(keys);
-    } catch (error: any) {
-      publicMethodErrorHandler(error, this.name);
-    }
-  }
-
   static subscribe(
     fallbackToSettings: boolean,
     callback?: IsSubscribedHandlerCallback
@@ -194,10 +182,6 @@ class FlareLane {
         resolve(id);
       });
     });
-  }
-
-  static getTags(getTagsHandler: (tags: Tags | null) => any) {
-    FlareLaneNativeModule.getTags(getTagsHandler);
   }
 }
 
