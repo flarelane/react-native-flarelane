@@ -1,19 +1,21 @@
 import FlareLane
+import React
 
 @objc(RCTFlareLane)
 class RCTFlareLane: RCTEventEmitter {
   public static var emitter: RCTEventEmitter!
   var notificationClickedEventKey: String = "FlareLane-NotificationClickedCallback"
   var notificationForegroundReceivedEventKey: String = "FlareLane-NotificationForegroundReceivedCallback"
+  var inAppMessageActionEventKey: String = "FlareLane-InAppMessageActionCallback"
   var notificationEventCache = [String: FlareLaneNotificationReceivedEvent]()
 
   override init() {
     super.init()
     RCTFlareLane.emitter = self
-    FlareLane.setSdkInfo(sdkType: .reactnative, sdkVersion: "1.6.1")
+    FlareLane.setSdkInfo(sdkType: .reactnative, sdkVersion: "1.7.0")
   }
 
-  // ----- PUBLIC METHOD -----
+  // ----- PUBLIC METHODS -----
 
   @objc(setLogLevel:)
   func setLogLevel(logLevel: Int) {
@@ -27,6 +29,11 @@ class RCTFlareLane: RCTEventEmitter {
       let launchOptions = self.bridge.launchOptions as? [UIApplication.LaunchOptionsKey: Any]
       FlareLane.initWithLaunchOptions(launchOptions, projectId: projectId, requestPermissionOnLaunch: requestPermissionOnLaunch)
     }
+  }
+
+  @objc(displayInApp:)
+  func displayInApp(group: String) {
+    FlareLane.displayInApp(group: group)
   }
 
   // ----- EVENT HANDLERS -----
@@ -46,6 +53,15 @@ class RCTFlareLane: RCTEventEmitter {
       RCTFlareLane.emitter.sendEvent(
         withName: self.notificationForegroundReceivedEventKey,
         body: event.notification.toDictionary()
+      )
+    }
+  }
+
+  @objc func setInAppMessageActionHandler() {
+    FlareLane.setInAppMessageActionHandler { iam, actionId in
+      RCTFlareLane.emitter.sendEvent(
+        withName: self.inAppMessageActionEventKey,
+        body: ["iam": iam.toDictionary(), "actionId": actionId]
       )
     }
   }
@@ -102,10 +118,22 @@ class RCTFlareLane: RCTEventEmitter {
   // ----- SDK SETTINGS -----
 
   override open func supportedEvents() -> [String] {
-    return [self.notificationClickedEventKey, self.notificationForegroundReceivedEventKey]
+    return [
+      self.notificationClickedEventKey,
+      self.notificationForegroundReceivedEventKey,
+      self.inAppMessageActionEventKey
+    ]
   }
 
   override static func requiresMainQueueSetup() -> Bool {
     return true
+  }
+}
+
+extension FlareLaneInAppMessage {
+  func toDictionary() -> [String: Any] {
+    return [
+      "id": self.id
+    ]
   }
 }

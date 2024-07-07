@@ -1,3 +1,4 @@
+import type { InAppMessage } from './inAppMessage';
 import type { NotificationReceivedEvent } from './notificationReceivedEvent';
 
 export type LogLevel = 'none' | 'error' | 'verbose';
@@ -15,6 +16,10 @@ export type NotificationHandlerCallback = (payload: Notification) => void;
 export type NotificationForegroundReceivedHandler = (
   payload: NotificationReceivedEvent
 ) => void;
+export type InAppMessageActionHandler = (
+  iam: InAppMessage,
+  actionId: string
+) => void;
 export type IsSubscribedHandlerCallback = (isSubscribed: boolean) => void;
 export type Tags = Record<string, unknown>;
 export type EventData = Record<string, string | number> | null;
@@ -24,7 +29,9 @@ export interface FlareLaneType {
   initialize(projectId: string, requestPermissionOnLaunch?: boolean): void;
   setNotificationClickedHandler: () => void;
   setNotificationForegroundReceivedHandler: () => void;
+  setInAppMessageActionHandler: () => void;
   displayNotification: (notificationId: string) => void;
+  displayInApp: (group: string) => void;
   setUserId: (userId: string | null) => void;
   setTags: (tags: Tags) => void;
   subscribe: (

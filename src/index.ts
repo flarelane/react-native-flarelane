@@ -4,6 +4,7 @@ import { NotificationReceivedEvent } from './notificationReceivedEvent';
 import type {
   EventData,
   FlareLaneType,
+  InAppMessageActionHandler,
   IsSubscribedHandlerCallback,
   LogLevel,
   NotificationForegroundReceivedHandler,
@@ -182,6 +183,33 @@ class FlareLane {
         resolve(id);
       });
     });
+  }
+
+  // ----- IN-APP MESSAGES -----
+
+  static displayInApp(group: string) {
+    if (!isString(group, this.name, true)) return;
+
+    try {
+      console.log(`FlareLane - displayInApp`);
+      FlareLaneNativeModule.displayInApp(group);
+    } catch (error: any) {
+      publicMethodErrorHandler(error, this.name);
+    }
+  }
+
+  static setInAppMessageActionHandler(callback: InAppMessageActionHandler) {
+    if (!isValidCallback(callback, this.name, true)) return;
+
+    try {
+      eventManager.setInAppMessageActionHandler(callback);
+      FlareLaneNativeModule.setInAppMessageActionHandler();
+      console.log(
+        `FlareLane - setInAppMessageActionHandler has been registered.`
+      );
+    } catch (error: any) {
+      publicMethodErrorHandler(error, this.name);
+    }
   }
 }
 

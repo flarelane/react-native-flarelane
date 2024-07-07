@@ -1,6 +1,10 @@
 import { AppRegistry, NativeEventEmitter, Platform } from 'react-native';
 import { events } from './constants';
-import type { FlareLaneType, NotificationHandlerCallback } from './types';
+import type {
+  FlareLaneType,
+  InAppMessageActionHandler,
+  NotificationHandlerCallback,
+} from './types';
 
 class FlareLaneEventManager {
   FlareLane: FlareLaneType;
@@ -58,6 +62,22 @@ class FlareLaneEventManager {
           }
 
           callback(noti);
+          return Promise.resolve();
+        }
+      );
+    }
+  }
+
+  setInAppMessageActionHandler(callback: InAppMessageActionHandler) {
+    if (Platform.OS === 'ios') {
+      this.setEventHandler(events.IN_APP_MESSAGE_ACTION, (data) => {
+        callback(data.iam, data.actionId);
+      });
+    } else {
+      AppRegistry.registerHeadlessTask(
+        events.IN_APP_MESSAGE_ACTION,
+        () => (data) => {
+          callback(data.iam, data.actionId);
           return Promise.resolve();
         }
       );

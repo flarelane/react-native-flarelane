@@ -3,5 +3,6 @@
   <application>
     <service android:name=".FlareLaneNotificationClickedService" />
     <service android:name=".FlareLaneNotificationForegroundReceivedService" />
+    <service android:name=".FlareLaneInAppMessageActionService" />
   </application>
 </manifest>
