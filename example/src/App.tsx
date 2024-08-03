@@ -35,6 +35,8 @@ export default function App() {
       setText(text);
       console.log(text);
     });
+
+    FlareLane.displayInApp('home');
   }, []);
 
   const toggleUserId = () => {

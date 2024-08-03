@@ -22,5 +22,5 @@ target 'FlareLaneExample' do
 end
 
 target 'FlareLaneNotificationServiceExtension' do
-  pod 'FlareLane', path: '/Users/minhyeok4dev/Documents/flarelane/FlareLane-iOS-SDK/FlareLane.podspec'
+  pod 'FlareLane', '1.7.0'
 end
