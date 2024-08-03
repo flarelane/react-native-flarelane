@@ -1,22 +1,23 @@
 import FlareLane from '@flarelane/react-native-sdk';
 import * as React from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
-import type { Notification } from 'src/types';
 
 export default function App() {
-  const [text, setText] = React.useState<Notification>();
+  const [text, setText] = React.useState<string>();
   const [isSetUserId, setIsSetUserId] = React.useState<boolean>(false);
   const [isSetTags, setIsSetTags] = React.useState<boolean>(false);
 
   React.useEffect(() => {
-    FlareLane.setNotificationClickedHandler((payload) => {
-      // Do something...
-      setText(payload); // Example code
+    FlareLane.setNotificationClickedHandler((noti) => {
+      const text = `Notification Clicked: ${JSON.stringify(noti)}`;
+      setText(text); // Example code
     });
 
     FlareLane.setNotificationForegroundReceivedHandler((event) => {
-      setText(event.notification);
-
+      const text = `Notification Foreground Received: ${JSON.stringify(
+        event.notification
+      )}`;
+      setText(text);
       setTimeout(() => {
         if (event.notification.data?.dismiss_foreground_notification === 'true')
           return;
@@ -25,6 +26,17 @@ export default function App() {
         event.display();
       }, 3000);
     });
+
+    FlareLane.setInAppMessageActionHandler((iam, actionId) => {
+      const text = `Handling InAppMessage Action: ${JSON.stringify({
+        iam,
+        actionId,
+      })}`;
+      setText(text);
+      console.log(text);
+    });
+
+    FlareLane.displayInApp('home');
   }, []);
 
   const toggleUserId = () => {
@@ -62,15 +74,14 @@ export default function App() {
     FlareLane.isSubscribed(console.log);
   };
 
+  const displayInApp = () => {
+    FlareLane.displayInApp('home');
+  };
+
   return (
     <View style={styles.container}>
       <Text>FlareLane Test</Text>
-      <Text>Notification id: {text?.id}</Text>
-      <Text>Notification title: {text?.title}</Text>
-      <Text>Notification body: {text?.body}</Text>
-      <Text>Notification url: {text?.url}</Text>
-      <Text>Notification imageUrl: {text?.imageUrl}</Text>
-      <Text>Notification data: {JSON.stringify(text?.data)}</Text>
+      <Text>{text}</Text>
       <Button onPress={toggleUserId} title="TOGGLE USER ID" />
       <Button onPress={toggleTags} title="TOGGLE TAGS" />
       <Button onPress={getDeviceId} title="GET DEVICE ID" />
@@ -78,6 +89,7 @@ export default function App() {
       <Button onPress={subscribe} title="SUBSCRIBE" />
       <Button onPress={unsubscribe} title="UNSUBSCRIBE" />
       <Button onPress={isSubscribedFunc} title="ISSUBSCRIBED" />
+      <Button onPress={displayInApp} title="DISPLAY INAPP" />
     </View>
   );
 }

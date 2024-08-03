@@ -16,6 +16,8 @@ RCT_EXTERN_METHOD(setNotificationClickedHandler)
 
 RCT_EXTERN_METHOD(setNotificationForegroundReceivedHandler)
 
+RCT_EXTERN_METHOD(setInAppMessageActionHandler)
+
 RCT_EXTERN_METHOD(displayNotification:(NSString)notificationId)
 
 RCT_EXTERN_METHOD(setUserId:
@@ -36,6 +38,8 @@ RCT_EXTERN_METHOD(unsubscribe: (RCTResponseSenderBlock *)successCallback)
 RCT_EXTERN_METHOD(isSubscribed: (RCTResponseSenderBlock *)successCallback)
 
 RCT_EXTERN_METHOD(getDeviceId: (RCTResponseSenderBlock *)successCallback)
+
+RCT_EXTERN_METHOD(displayInApp: (NSString)group)
 
 RCT_EXTERN_METHOD(trackEvent:
                     (NSString)type

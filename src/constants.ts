@@ -14,4 +14,5 @@ export const events = {
   NOTIFICATION_CLICKED: 'FlareLane-NotificationClickedCallback',
   NOTIFICATION_FOREGROUND_RECEIVED:
     'FlareLane-NotificationForegroundReceivedCallback',
+  IN_APP_MESSAGE_ACTION: 'FlareLane-InAppMessageActionCallback',
 };

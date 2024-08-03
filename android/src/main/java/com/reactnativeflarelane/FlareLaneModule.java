@@ -16,6 +16,8 @@ import com.facebook.react.module.annotations.ReactModule;
 import com.facebook.react.bridge.Callback;
 
 import com.flarelane.FlareLane;
+import com.flarelane.InAppMessage;
+import com.flarelane.InAppMessageActionHandler;
 import com.flarelane.Notification;
 import com.flarelane.NotificationClickedHandler;
 import com.flarelane.NotificationForegroundReceivedHandler;
@@ -41,7 +43,7 @@ public class FlareLaneModule extends ReactContextBaseJavaModule {
     super(reactContext);
     mReactApplicationContext = reactContext;
     FlareLane.SdkInfo.type = SdkType.REACTNATIVE;
-    FlareLane.SdkInfo.version = "1.6.1";
+    FlareLane.SdkInfo.version = "1.7.0";
   }
 
   @Override
@@ -180,5 +182,27 @@ public class FlareLaneModule extends ReactContextBaseJavaModule {
     } catch (Exception e) {
       Log.e("FlareLane", Log.getStackTraceString(e));
     }
+  }
+
+  // ----- IN-APP MESSAGE -----
+
+  @ReactMethod
+  public void displayInApp(String group) {
+    FlareLane.displayInApp(context, group);
+  }
+
+  @ReactMethod
+  public void setInAppMessageActionHandler() {
+    FlareLane.setInAppMessageActionHandler(new InAppMessageActionHandler() {
+      @Override
+      public void onExecute(@NonNull InAppMessage iam, @NonNull String actionId) {
+        Intent service = new Intent(context.getApplicationContext(), FlareLaneInAppMessageActionService.class);
+        Bundle bundle = new Bundle();
+        bundle.putBundle("iam", iam.toBundle());
+        bundle.putString("actionId", actionId);
+        service.putExtras(bundle);
+        context.startService(service);
+      }
+    });
   }
 }
