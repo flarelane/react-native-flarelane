@@ -101,7 +101,7 @@ class FlareLane {
     if (!isString(userId, this.name, true)) return;
 
     try {
-      console.log(`FlareLane - Set user id`);
+      console.log(`FlareLane - Set user id: ${userId}`);
       FlareLaneNativeModule.setUserId(userId);
     } catch (error: any) {
       publicMethodErrorHandler(error, this.name);
@@ -112,7 +112,7 @@ class FlareLane {
     if (!isPlainObject(tags, this.name)) return;
 
     try {
-      console.log(`FlareLane - Set tags`);
+      console.log(`FlareLane - Set tags: ${JSON.stringify(tags)}`);
       FlareLaneNativeModule.setTags(tags);
     } catch (error: any) {
       publicMethodErrorHandler(error, this.name);
