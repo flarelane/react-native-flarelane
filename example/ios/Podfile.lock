@@ -240,7 +240,7 @@ PODS:
     - React-cxxreact (= 0.63.5)
     - React-jsi (= 0.63.5)
   - React-jsinspector (0.63.5)
-  - react-native-flarelane (1.7.1):
+  - react-native-flarelane (1.8.0):
     - FlareLane (= 1.7.1)
     - React-Core
   - React-RCTActionSheet (0.63.5):
@@ -450,7 +450,7 @@ SPEC CHECKSUMS:
   React-jsi: 7d908b17758178b076a05a254523f1a4227b53d2
   React-jsiexecutor: e06a32e42affb2bd89e4c8369349b5fcf787710c
   React-jsinspector: fdbc08866b34ae8e1b788ea1cbd9f9d1ca2aa3d6
-  react-native-flarelane: aeb6cdf41b9b12a25da897ff792e17a212ed2cbd
+  react-native-flarelane: d2e9a6b18805ce2aa57268a775968db3a110de91
   React-RCTActionSheet: e911b99f0d6fa7711ffc2f62d236b12a32771835
   React-RCTAnimation: ad8b853170a059faf31d6add34f67d22391bbe01
   React-RCTBlob: 134c7270b6672c9c05383b2e0f7f044ba39d7dda
@@ -467,4 +467,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 640e65ce7ab5bcdee756086516022fd8510f63c1
 
-COCOAPODS: 1.15.2
+COCOAPODS: 1.16.2
