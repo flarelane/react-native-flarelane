@@ -15,6 +15,6 @@ Pod::Spec.new do |s|
 
   s.source_files = "ios/**/*.{h,m,mm,swift}"
 
-  s.dependency "FlareLane", '1.9.2'
+  s.dependency "FlareLane", '1.9.3'
   s.dependency "React-Core"
 end
