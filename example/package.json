@@ -10,8 +10,6 @@
     "build:ios": "react-native bundle --entry-file='index.tsx' --bundle-output='./ios/main.jsbundle' --dev=false --platform='ios'"
   },
   "dependencies": {
-    "@react-native-firebase/app": "^17.4.2",
-    "@react-native-firebase/messaging": "^17.4.2",
     "react": "16.13.1",
     "react-native": "0.63.5"
   },

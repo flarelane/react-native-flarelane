@@ -75,7 +75,7 @@ export default function App() {
   };
 
   const displayInApp = () => {
-    FlareLane.displayInApp('home');
+    FlareLane.displayInApp('home', { data: 'd2' });
   };
 
   return (

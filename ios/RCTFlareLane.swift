@@ -12,7 +12,7 @@ class RCTFlareLane: RCTEventEmitter {
   override init() {
     super.init()
     RCTFlareLane.emitter = self
-    FlareLane.setSdkInfo(sdkType: .reactnative, sdkVersion: "1.9.2")
+    FlareLane.setSdkInfo(sdkType: .reactnative, sdkVersion: "1.9.3")
   }
 
   // ----- PUBLIC METHODS -----
@@ -31,9 +31,9 @@ class RCTFlareLane: RCTEventEmitter {
     }
   }
 
-  @objc(displayInApp:)
-  func displayInApp(group: String) {
-    FlareLane.displayInApp(group: group)
+  @objc(displayInApp:data:)
+  func displayInApp(group: String, data: [String: Any]?) {
+    FlareLane.displayInApp(group: group, data: data)
   }
 
   // ----- EVENT HANDLERS -----

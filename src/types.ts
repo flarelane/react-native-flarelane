@@ -31,7 +31,7 @@ export interface FlareLaneType {
   setNotificationForegroundReceivedHandler: () => void;
   setInAppMessageActionHandler: () => void;
   displayNotification: (notificationId: string) => void;
-  displayInApp: (group: string) => void;
+  displayInApp: (group: string, data?: Record<string, unknown> | null) => void;
   setUserId: (userId: string | null) => void;
   setTags: (tags: Tags) => void;
   subscribe: (
