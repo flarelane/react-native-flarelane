@@ -39,7 +39,9 @@ RCT_EXTERN_METHOD(isSubscribed: (RCTResponseSenderBlock *)successCallback)
 
 RCT_EXTERN_METHOD(getDeviceId: (RCTResponseSenderBlock *)successCallback)
 
-RCT_EXTERN_METHOD(displayInApp: (NSString)group)
+RCT_EXTERN_METHOD(displayInApp: (NSString)group
+                    data: (NSDictionary)data
+)
 
 RCT_EXTERN_METHOD(trackEvent:
                     (NSString)type

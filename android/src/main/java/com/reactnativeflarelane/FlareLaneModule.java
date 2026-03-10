@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -187,8 +188,16 @@ public class FlareLaneModule extends ReactContextBaseJavaModule {
   // ----- IN-APP MESSAGE -----
 
   @ReactMethod
-  public void displayInApp(String group) {
-    FlareLane.displayInApp(context, group);
+  public void displayInApp(String group, @Nullable ReadableMap data) {
+    try {
+      FlareLane.displayInApp(
+        context,
+        group,
+        data == null ? null : new JSONObject(data.toHashMap())
+      );
+    } catch (Exception e) {
+      Log.e("FlareLane", Log.getStackTraceString(e));
+    }
   }
 
   @ReactMethod

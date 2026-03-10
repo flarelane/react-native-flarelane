@@ -31,9 +31,9 @@ class RCTFlareLane: RCTEventEmitter {
     }
   }
 
-  @objc(displayInApp:)
-  func displayInApp(group: String) {
-    FlareLane.displayInApp(group: group)
+  @objc(displayInApp:data:)
+  func displayInApp(group: String, data: [String: Any]?) {
+    FlareLane.displayInApp(group: group, data: data)
   }
 
   // ----- EVENT HANDLERS -----

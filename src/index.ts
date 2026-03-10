@@ -187,12 +187,12 @@ class FlareLane {
 
   // ----- IN-APP MESSAGES -----
 
-  static displayInApp(group: string) {
+  static displayInApp(group: string, data?: Record<string, unknown> | null) {
     if (!isString(group, this.name, true)) return;
 
     try {
-      console.log(`FlareLane - displayInApp`);
-      FlareLaneNativeModule.displayInApp(group);
+      console.log(`FlareLane - displayInApp`, { group, data: data ?? null });
+      FlareLaneNativeModule.displayInApp(group, data ?? null);
     } catch (error: any) {
       publicMethodErrorHandler(error, this.name);
     }
