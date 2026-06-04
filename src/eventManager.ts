@@ -19,7 +19,10 @@ function registerHeadlessTaskOnce(eventName: string) {
   headlessRegistered[eventName] = true;
   AppRegistry.registerHeadlessTask(eventName, () => async (payload) => {
     const cb = headlessCallbacks[eventName];
-    if (cb) cb(payload);
+    // Await the callback's result so AppRegistry observes completion of
+    // async handlers; sync callbacks resolve immediately. Without the await,
+    // the task could finish before an async callback finishes its work.
+    if (cb) await Promise.resolve(cb(payload));
   });
 }
 

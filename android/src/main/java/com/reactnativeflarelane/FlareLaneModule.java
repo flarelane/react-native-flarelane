@@ -155,7 +155,15 @@ public class FlareLaneModule extends ReactContextBaseJavaModule {
       callback.invoke(payload);
     } catch (Exception e) {
       Log.e("FlareLane", Log.getStackTraceString(e));
-      callback.invoke((Object) null);
+      // Match the WebViewSyncPayload shape on the JS side (all-null) instead of
+      // a bare `null`, so the adapter's `payload?.projectId ?? null` reads stay
+      // homogeneous and don't have to special-case "no payload at all".
+      com.facebook.react.bridge.WritableMap fallback =
+          com.facebook.react.bridge.Arguments.createMap();
+      fallback.putNull("projectId");
+      fallback.putNull("deviceId");
+      fallback.putNull("userId");
+      callback.invoke(fallback);
     }
   }
 

@@ -232,4 +232,3 @@ class FlareLane {
 }
 
 export default FlareLane;
-export { FlareLaneNativeModule };

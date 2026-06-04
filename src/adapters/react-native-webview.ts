@@ -144,14 +144,14 @@ async function _handle(message: string): Promise<string | null> {
 }
 
 /**
- * `react-native-webview` 전용 어댑터.
+ * `react-native-webview`-specific adapter.
  *
- * 네이티브 Android/iOS의 `FlareLaneJavascriptInterface` + `BRIDGE_NAME` 패턴을
- * RN에서 그대로 쓸 수 있도록, react-native-webview의 prop/callback 슬롯
- * 이름과 동일한 이름의 멤버를 노출합니다. customer는 자기 `<WebView>` 위젯을
- * 평소대로 와이어링하면서 필요한 slot에 우리 멤버를 끼워 넣기만 하면 됩니다.
+ * Mirrors the native Android/iOS `FlareLaneJavascriptInterface` + `BRIDGE_NAME`
+ * pattern in RN by exposing members named 1:1 with `react-native-webview`'s
+ * prop/callback slots. Customers wire their `<WebView>` as usual and drop the
+ * adapter members into the matching slots.
  *
- * 사용 예 — customer의 기존 코드와 함께:
+ * Example — alongside the customer's existing wiring:
  *
  *   const webViewRef = useRef<WebView>(null);
  *   <WebView
@@ -171,18 +171,19 @@ async function _handle(message: string): Promise<string | null> {
  *   />
  */
 export class FlareLaneJavascriptInterface {
-  /** Channel name constant — 네이티브 SDK의 `BRIDGE_NAME`과 같은 역할. */
+  /** Channel name constant — mirrors the native SDK's `BRIDGE_NAME`. */
   static readonly BRIDGE_NAME = 'FlareLaneNativeBridge';
 
-  /** `<WebView injectedJavaScript={...}>`에 그대로 꽂는 JS 문자열. */
+  /** JS string to drop into `<WebView injectedJavaScript={...}>`. */
   static readonly injectedJavaScript: string = _injectionScript;
 
-  /** `<WebView injectedJavaScriptBeforeContentLoaded={...}>`에 그대로 꽂는 JS 문자열 (위와 동일 값). */
-  static readonly injectedJavaScriptBeforeContentLoaded: string = _injectionScript;
+  /** JS string to drop into `<WebView injectedJavaScriptBeforeContentLoaded={...}>` (same value as above). */
+  static readonly injectedJavaScriptBeforeContentLoaded: string =
+    _injectionScript;
 
   /**
-   * `<WebView onMessage={...}>`에 꽂는 핸들러 팩토리.
-   * webview ref는 syncDeviceData 응답 JS를 webview로 다시 evaluate하기 위함.
+   * Handler factory for `<WebView onMessage={...}>`. The webview ref is used to
+   * evaluate the syncDeviceData response JS back into the webview.
    */
   static onMessage(webViewRef: {
     current: { injectJavaScript: (js: string) => void } | null;

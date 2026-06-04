@@ -47,6 +47,14 @@ export default function App() {
     });
 
     FlareLane.displayInApp('home');
+
+    // Sync initial subscribe-toggle label with the actual SDK state so the
+    // first tap doesn't appear inverted (e.g. already-subscribed device showing
+    // "set"). isSubscribed is one-shot; the toggle handlers keep it in sync
+    // after that.
+    FlareLane.isSubscribed((subscribed) => {
+      setIsSubscribedState(subscribed);
+    });
   }, []);
 
   const toggleUserId = () => {
@@ -138,10 +146,15 @@ export default function App() {
         onPress={toggleUserId}
         title={`TOGGLE USER ID (${isSetUserId ? 'del' : 'set'})`}
       />
-      <Button onPress={toggleTags} title={`TOGGLE TAGS (${isSetTags ? 'del' : 'set'})`} />
+      <Button
+        onPress={toggleTags}
+        title={`TOGGLE TAGS (${isSetTags ? 'del' : 'set'})`}
+      />
       <Button
         onPress={toggleUserAttributes}
-        title={`TOGGLE USER ATTRIBUTES (${isSetUserAttributes ? 'del' : 'set'})`}
+        title={`TOGGLE USER ATTRIBUTES (${
+          isSetUserAttributes ? 'del' : 'set'
+        })`}
       />
       <Button
         onPress={toggleSubscribe}
