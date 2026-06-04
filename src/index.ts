@@ -10,6 +10,7 @@ import type {
   NotificationForegroundReceivedHandler,
   NotificationHandlerCallback,
   Tags,
+  UserAttributes,
 } from './types';
 import {
   convertLogLevel,
@@ -119,6 +120,23 @@ class FlareLane {
     }
   }
 
+  /**
+   * Set user attributes (name/email/phoneNumber/dob/timeZone/country/language, etc.).
+   * Sent only when userId is set, matching Web SDK behavior.
+   */
+  static setUserAttributes(attributes: UserAttributes) {
+    if (!isPlainObject(attributes, this.name)) return;
+
+    try {
+      console.log(
+        `FlareLane - Set user attributes: ${JSON.stringify(attributes)}`
+      );
+      FlareLaneNativeModule.setUserAttributes(attributes);
+    } catch (error: any) {
+      publicMethodErrorHandler(error, this.name);
+    }
+  }
+
   static subscribe(
     fallbackToSettings: boolean,
     callback?: IsSubscribedHandlerCallback
@@ -214,3 +232,4 @@ class FlareLane {
 }
 
 export default FlareLane;
+export { FlareLaneNativeModule };

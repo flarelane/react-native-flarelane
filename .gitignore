@@ -62,3 +62,13 @@ lib/
 google-services.json
 GoogleService-Info.plist
 main.jsbundle
+
+# RN bundle output (Android `yarn android` debug builds & iOS `react-native bundle`)
+example/android/app/src/main/assets/index.android.bundle
+example/android/app/src/main/res/drawable-*/
+example/android/app/src/main/res/raw/
+example/ios/assets/
+example/ios/main.jsbundle
+
+# Xcode build output for the example app
+example/ios/build/

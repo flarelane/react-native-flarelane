@@ -1,11 +1,21 @@
 import FlareLane from '@flarelane/react-native-sdk';
 import * as React from 'react';
-import { Button, StyleSheet, Text, View } from 'react-native';
+import { Button, ScrollView, StyleSheet, Text } from 'react-native';
+import { WebViewBridgeDemo } from './WebViewBridgeDemo';
+
+// Keep in sync with example/index.tsx so the Web SDK demo runs against the
+// same project as the native bindings.
+const FLARELANE_PROJECT_ID = 'a43cdc82-0ea5-4fdd-aebc-1940fe99b6c3';
 
 export default function App() {
   const [text, setText] = React.useState<string>();
   const [isSetUserId, setIsSetUserId] = React.useState<boolean>(false);
   const [isSetTags, setIsSetTags] = React.useState<boolean>(false);
+  const [isSetUserAttributes, setIsSetUserAttributes] =
+    React.useState<boolean>(false);
+  const [isSubscribedState, setIsSubscribedState] =
+    React.useState<boolean>(false);
+  const [showWebViewDemo, setShowWebViewDemo] = React.useState<boolean>(false);
 
   React.useEffect(() => {
     FlareLane.setNotificationClickedHandler((noti) => {
@@ -62,12 +72,19 @@ export default function App() {
     FlareLane.trackEvent('test_event', { react: 'native' });
   };
 
-  const subscribe = () => {
-    FlareLane.subscribe(true, console.log);
-  };
-
-  const unsubscribe = () => {
-    FlareLane.unsubscribe(console.log);
+  // Single toggle: tap when label says (true) → subscribe; (false) → unsubscribe.
+  const toggleSubscribe = () => {
+    if (!isSubscribedState) {
+      FlareLane.subscribe(true, (subscribed) => {
+        console.log('subscribe ->', subscribed);
+        setIsSubscribedState(subscribed);
+      });
+    } else {
+      FlareLane.unsubscribe((subscribed) => {
+        console.log('unsubscribe ->', subscribed);
+        setIsSubscribedState(subscribed);
+      });
+    }
   };
 
   const isSubscribedFunc = () => {
@@ -78,26 +95,82 @@ export default function App() {
     FlareLane.displayInApp('home', { data: 'd2' });
   };
 
+  const toggleUserAttributes = () => {
+    if (isSetUserAttributes) {
+      FlareLane.setUserAttributes({
+        name: null,
+        email: null,
+        phoneNumber: null,
+        dob: null,
+        timeZone: null,
+        country: null,
+        language: null,
+      });
+      setIsSetUserAttributes(false);
+    } else {
+      FlareLane.setUserAttributes({
+        name: 'Test User',
+        email: 'test@example.com',
+        phoneNumber: '+821012345678',
+        dob: '1990-01-01',
+        timeZone: 'Asia/Seoul',
+        country: 'KR',
+        language: 'ko',
+      });
+      setIsSetUserAttributes(true);
+    }
+  };
+
+  if (showWebViewDemo) {
+    return (
+      <WebViewBridgeDemo
+        onClose={() => setShowWebViewDemo(false)}
+        projectId={FLARELANE_PROJECT_ID}
+      />
+    );
+  }
+
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       <Text>FlareLane Test</Text>
       <Text>{text}</Text>
-      <Button onPress={toggleUserId} title="TOGGLE USER ID" />
-      <Button onPress={toggleTags} title="TOGGLE TAGS" />
+      <Button
+        onPress={toggleUserId}
+        title={`TOGGLE USER ID (${isSetUserId ? 'del' : 'set'})`}
+      />
+      <Button onPress={toggleTags} title={`TOGGLE TAGS (${isSetTags ? 'del' : 'set'})`} />
+      <Button
+        onPress={toggleUserAttributes}
+        title={`TOGGLE USER ATTRIBUTES (${isSetUserAttributes ? 'del' : 'set'})`}
+      />
+      <Button
+        onPress={toggleSubscribe}
+        title={`TOGGLE SUBSCRIBE (${isSubscribedState ? 'del' : 'set'})`}
+      />
       <Button onPress={getDeviceId} title="GET DEVICE ID" />
       <Button onPress={trackEvent} title="TRACK EVENT" />
-      <Button onPress={subscribe} title="SUBSCRIBE" />
-      <Button onPress={unsubscribe} title="UNSUBSCRIBE" />
       <Button onPress={isSubscribedFunc} title="ISSUBSCRIBED" />
       <Button onPress={displayInApp} title="DISPLAY INAPP" />
-    </View>
+      <Text style={styles.sectionLabel}>WebView Bridge</Text>
+      <Button
+        onPress={() => setShowWebViewDemo(true)}
+        title="react-native-webview"
+      />
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    alignItems: 'center',
+    flexGrow: 1,
+    alignItems: 'stretch',
     justifyContent: 'center',
+    padding: 16,
+  },
+  sectionLabel: {
+    marginTop: 16,
+    marginBottom: 4,
+    fontSize: 12,
+    color: '#666',
   },
 });
