@@ -1,6 +1,7 @@
 package com.reactnativeflarelane;
 
 import android.content.Intent;
+import android.os.Build;
 
 import androidx.annotation.Nullable;
 
@@ -15,7 +16,7 @@ public class FlareLaneNotificationForegroundReceivedService extends HeadlessJsTa
   @Override
   protected @Nullable HeadlessJsTaskConfig getTaskConfig(Intent intent) {
     if (intent == null) return null;
-    Serializable extra = intent.getSerializableExtra(FlareLaneModule.EXTRA_NOTIFICATION);
+    Serializable extra = getNotificationExtra(intent);
     if (!(extra instanceof HashMap)) return null;
     @SuppressWarnings("unchecked")
     HashMap<String, Object> payload = (HashMap<String, Object>) extra;
@@ -25,5 +26,17 @@ public class FlareLaneNotificationForegroundReceivedService extends HeadlessJsTa
       5000,
       true
     );
+  }
+
+  // Intent.getSerializableExtra(String) is deprecated on API 33+ in favor of
+  // the typed overload. Branch on SDK_INT to avoid the deprecation warning
+  // without taking a new androidx.core dependency.
+  @SuppressWarnings("deprecation")
+  private static Serializable getNotificationExtra(Intent intent) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+      return intent.getSerializableExtra(
+        FlareLaneModule.EXTRA_NOTIFICATION, Serializable.class);
+    }
+    return intent.getSerializableExtra(FlareLaneModule.EXTRA_NOTIFICATION);
   }
 }

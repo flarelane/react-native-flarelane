@@ -112,7 +112,13 @@ async function _handle(message: string): Promise<string | null> {
         );
         return null;
       case 'setTags':
-        if (body.tags && typeof body.tags === 'object') {
+        // typeof null === 'object' and typeof [] === 'object' in JS — guard
+        // both so only plain object payloads reach the SDK call.
+        if (
+          body.tags &&
+          typeof body.tags === 'object' &&
+          !Array.isArray(body.tags)
+        ) {
           FlareLane.setTags(body.tags as Record<string, unknown>);
         }
         return null;
@@ -123,11 +129,19 @@ async function _handle(message: string): Promise<string | null> {
         }
         FlareLane.trackEvent(
           body.type,
-          body.data && typeof body.data === 'object' ? body.data : null
+          body.data &&
+            typeof body.data === 'object' &&
+            !Array.isArray(body.data)
+            ? body.data
+            : null
         );
         return null;
       case 'setUserAttributes':
-        if (body.attributes && typeof body.attributes === 'object') {
+        if (
+          body.attributes &&
+          typeof body.attributes === 'object' &&
+          !Array.isArray(body.attributes)
+        ) {
           FlareLane.setUserAttributes(
             body.attributes as Record<string, unknown>
           );
@@ -147,39 +161,40 @@ async function _handle(message: string): Promise<string | null> {
  * `react-native-webview`-specific adapter.
  *
  * Mirrors the native Android/iOS `FlareLaneJavascriptInterface` + `BRIDGE_NAME`
- * pattern in RN by exposing members named 1:1 with `react-native-webview`'s
- * prop/callback slots. Customers wire their `<WebView>` as usual and drop the
- * adapter members into the matching slots.
+ * pattern in RN. Customers compose `injectedJavaScript` with their existing
+ * injection (if any) and reuse the same string across both injection slots.
  *
  * Example — alongside the customer's existing wiring:
  *
  *   const webViewRef = useRef<WebView>(null);
+ *   const injection =
+ *     myExistingInjection + FlareLaneJavascriptInterface.injectedJavaScript;
  *   <WebView
  *     ref={webViewRef}
- *     injectedJavaScript={
- *       myExistingInjection + FlareLaneJavascriptInterface.injectedJavaScript
- *     }
- *     injectedJavaScriptBeforeContentLoaded={
- *       myExistingInjection +
- *       FlareLaneJavascriptInterface.injectedJavaScriptBeforeContentLoaded
- *     }
- *     onMessage={async (event) => {
- *       await FlareLaneJavascriptInterface.onMessage(webViewRef)(event);
- *       myExistingOnMessage(event);
- *     }}
  *     source={{ uri }}
+ *     injectedJavaScript={injection}
+ *     injectedJavaScriptBeforeContentLoaded={injection}
+ *     onMessage={FlareLaneJavascriptInterface.onMessage(webViewRef)}
  *   />
+ *
+ * If the customer already has an `onMessage` handler, wrap the adapter inside:
+ *
+ *   onMessage={async (event) => {
+ *     await FlareLaneJavascriptInterface.onMessage(webViewRef)(event);
+ *     myExistingOnMessage(event);
+ *   }}
  */
 export class FlareLaneJavascriptInterface {
   /** Channel name constant — mirrors the native SDK's `BRIDGE_NAME`. */
   static readonly BRIDGE_NAME = 'FlareLaneNativeBridge';
 
-  /** JS string to drop into `<WebView injectedJavaScript={...}>`. */
+  /**
+   * JS string to inject into the WebView. Same value works for both
+   * `injectedJavaScript` and `injectedJavaScriptBeforeContentLoaded` slots —
+   * compose with the customer's existing injection (if any) and assign the
+   * resulting string to whichever slots they use.
+   */
   static readonly injectedJavaScript: string = _injectionScript;
-
-  /** JS string to drop into `<WebView injectedJavaScriptBeforeContentLoaded={...}>` (same value as above). */
-  static readonly injectedJavaScriptBeforeContentLoaded: string =
-    _injectionScript;
 
   /**
    * Handler factory for `<WebView onMessage={...}>`. The webview ref is used to

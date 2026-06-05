@@ -75,12 +75,6 @@ describe('FlareLaneJavascriptInterface (react-native-webview adapter)', () => {
     );
   });
 
-  it('injectedJavaScriptBeforeContentLoaded mirrors injectedJavaScript', () => {
-    expect(
-      FlareLaneJavascriptInterface.injectedJavaScriptBeforeContentLoaded
-    ).toBe(FlareLaneJavascriptInterface.injectedJavaScript);
-  });
-
   it('onMessage(ref) routes syncDeviceData payload through native handle and injects the response back', async () => {
     const injectJavaScript = jest.fn();
     const webViewRef = { current: { injectJavaScript } };

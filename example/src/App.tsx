@@ -18,6 +18,7 @@ export default function App() {
   const [showWebViewDemo, setShowWebViewDemo] = React.useState<boolean>(false);
 
   React.useEffect(() => {
+    let mounted = true;
     FlareLane.setNotificationClickedHandler((noti) => {
       const text = `Notification Clicked: ${JSON.stringify(noti)}`;
       setText(text); // Example code
@@ -53,8 +54,11 @@ export default function App() {
     // "set"). isSubscribed is one-shot; the toggle handlers keep it in sync
     // after that.
     FlareLane.isSubscribed((subscribed) => {
-      setIsSubscribedState(subscribed);
+      if (mounted) setIsSubscribedState(subscribed);
     });
+    return () => {
+      mounted = false;
+    };
   }, []);
 
   const toggleUserId = () => {

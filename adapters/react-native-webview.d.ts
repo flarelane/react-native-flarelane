@@ -1,1 +1,1 @@
-export * from '../lib/typescript/adapters/react-native-webview';
+export * from '../src/adapters/react-native-webview';

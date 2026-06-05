@@ -23,44 +23,46 @@ callback slots — drop them into your existing `<WebView>` wiring.
 ### react-native-webview
 
 ```tsx
-import { WebView, WebViewMessageEvent } from 'react-native-webview';
+import { WebView } from 'react-native-webview';
 import { FlareLaneJavascriptInterface } from '@flarelane/react-native-sdk/adapters/react-native-webview';
 
 const webViewRef = useRef<WebView>(null);
 
+// `injectedJavaScript` and `injectedJavaScriptBeforeContentLoaded` carry the
+// same string, so one variable can be reused across both slots. If you don't
+// have existing injection, drop the `myExistingInjection +` part.
+const injection =
+  myExistingInjection + FlareLaneJavascriptInterface.injectedJavaScript;
+
 <WebView
   ref={webViewRef}
-  // single-valued slot — compose adapter string with anything you already inject
-  injectedJavaScript={
-    myExistingInjection + FlareLaneJavascriptInterface.injectedJavaScript
-  }
-  injectedJavaScriptBeforeContentLoaded={
-    myExistingInjection +
-    FlareLaneJavascriptInterface.injectedJavaScriptBeforeContentLoaded
-  }
-  // single-valued slot — call adapter callback inside your own handler
-  onMessage={async (event: WebViewMessageEvent) => {
-    await FlareLaneJavascriptInterface.onMessage(webViewRef)(event);
-    myExistingOnMessage(event);
-  }}
   source={{ uri }}
+  injectedJavaScript={injection}
+  injectedJavaScriptBeforeContentLoaded={injection}
+  onMessage={FlareLaneJavascriptInterface.onMessage(webViewRef)}
 />
+```
+
+If you already have an `onMessage` handler, wrap the adapter inside it:
+
+```tsx
+onMessage={async (event) => {
+  await FlareLaneJavascriptInterface.onMessage(webViewRef)(event);
+  myExistingOnMessage(event);
+}}
 ```
 
 The adapter exposes:
 
 - `FlareLaneJavascriptInterface.BRIDGE_NAME` — channel name constant.
 - `FlareLaneJavascriptInterface.injectedJavaScript` — JS to inject. Includes
-  the `react-native-webview` channel adapter and the bridge shim.
-- `FlareLaneJavascriptInterface.injectedJavaScriptBeforeContentLoaded` —
-  same value, kept as a separate member so the slot name matches 1:1.
+  the `react-native-webview` channel adapter and the bridge shim. The same
+  string is valid for both `injectedJavaScript` and
+  `injectedJavaScriptBeforeContentLoaded` slots.
 - `FlareLaneJavascriptInterface.onMessage(webViewRef)` — factory that
   returns a handler for `<WebView onMessage={…}>`. The ref is used to
   evaluate response JS (e.g. the `syncDeviceData` callback) back into the
   webview.
-
-If your `<WebView>` has no existing injection or `onMessage`, omit the
-`myExistingInjection +` and `myExistingOnMessage(event)` lines.
 
 ### Other webview packages
 
