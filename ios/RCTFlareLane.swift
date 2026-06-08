@@ -12,7 +12,7 @@ class RCTFlareLane: RCTEventEmitter {
   override init() {
     super.init()
     RCTFlareLane.emitter = self
-    FlareLane.setSdkInfo(sdkType: .reactnative, sdkVersion: "1.9.4")
+    FlareLane.setSdkInfo(sdkType: .reactnative, sdkVersion: "1.10.0")
   }
 
   // ----- PUBLIC METHODS -----
@@ -85,6 +85,22 @@ class RCTFlareLane: RCTEventEmitter {
   @objc(setTags:)
   func setTags(tags: [String: Any]) {
     FlareLane.setTags(tags: tags)
+  }
+
+  @objc(setUserAttributes:)
+  func setUserAttributes(attributes: [String: Any]) {
+    FlareLane.setUserAttributes(attributes: attributes)
+  }
+
+  // Helper-only entry for the WebView bridge adapter — not part of the public API.
+  @objc(_webViewSyncPayload:)
+  func _webViewSyncPayload(_ successCallback: RCTResponseSenderBlock) {
+    let payload: [String: Any] = [
+      "projectId": FlareLane.getProjectId() as Any,
+      "deviceId": FlareLane.getDeviceId() as Any,
+      "userId": FlareLane.getUserId() as Any
+    ]
+    successCallback([payload])
   }
 
   @objc(subscribe:successCallback:)

@@ -44,7 +44,7 @@ public class FlareLaneModule extends ReactContextBaseJavaModule {
     super(reactContext);
     mReactApplicationContext = reactContext;
     FlareLane.SdkInfo.type = SdkType.REACTNATIVE;
-    FlareLane.SdkInfo.version = "1.9.4";
+    FlareLane.SdkInfo.version = "1.10.0";
   }
 
   @Override
@@ -78,13 +78,20 @@ public class FlareLaneModule extends ReactContextBaseJavaModule {
   }
 
   // ----- EVENT HANDLERS -----
+
+  /** Bundle key carrying the notification's toHashMap() payload (Serializable HashMap). The
+   *  receiving Service converts it to a WritableMap with Arguments.makeNativeMap so JS gets the
+   *  parsed buttons[] and click metadata directly — matches iOS behavior (which passes the
+   *  toDictionary() result through RCTEventEmitter without re-encoding). */
+  static final String EXTRA_NOTIFICATION = "notification";
+
   @ReactMethod
   public void setNotificationClickedHandler() {
     FlareLane.setNotificationClickedHandler(new NotificationClickedHandler() {
       @Override
       public void onClicked(Notification notification) {
         Intent service = new Intent(context.getApplicationContext(), FlareLaneNotificationClickedService.class);
-        service.putExtras(notification.toBundle());
+        service.putExtra(EXTRA_NOTIFICATION, notification.toHashMap());
         context.startService(service);
       }
     });
@@ -97,7 +104,7 @@ public class FlareLaneModule extends ReactContextBaseJavaModule {
       public void onWillDisplay(NotificationReceivedEvent notificationReceivedEvent) {
         notificationEventCache.put(notificationReceivedEvent.getNotification().id, notificationReceivedEvent);
         Intent service = new Intent(context.getApplicationContext(), FlareLaneNotificationForegroundReceivedService.class);
-        service.putExtras(notificationReceivedEvent.getNotification().toBundle());
+        service.putExtra(EXTRA_NOTIFICATION, notificationReceivedEvent.getNotification().toHashMap());
         context.startService(service);
       }
     });
@@ -123,6 +130,40 @@ public class FlareLaneModule extends ReactContextBaseJavaModule {
       FlareLane.setTags(context, jsonObjectTags);
     } catch (Exception e) {
       Log.e("FlareLane", Log.getStackTraceString(e));
+    }
+  }
+
+  @ReactMethod
+  public void setUserAttributes(ReadableMap attributes) {
+    try {
+      JSONObject json = new JSONObject(attributes.toHashMap());
+      FlareLane.setUserAttributes(context, json);
+    } catch (Exception e) {
+      Log.e("FlareLane", Log.getStackTraceString(e));
+    }
+  }
+
+  // Helper-only entry for the WebView bridge adapter — not part of the public API.
+  @ReactMethod
+  public void _webViewSyncPayload(Callback callback) {
+    try {
+      com.facebook.react.bridge.WritableMap payload =
+          com.facebook.react.bridge.Arguments.createMap();
+      payload.putString("projectId", FlareLane.getProjectId(context));
+      payload.putString("deviceId", FlareLane.getDeviceId(context));
+      payload.putString("userId", FlareLane.getUserId(context));
+      callback.invoke(payload);
+    } catch (Exception e) {
+      Log.e("FlareLane", Log.getStackTraceString(e));
+      // Match the WebViewSyncPayload shape on the JS side (all-null) instead of
+      // a bare `null`, so the adapter's `payload?.projectId ?? null` reads stay
+      // homogeneous and don't have to special-case "no payload at all".
+      com.facebook.react.bridge.WritableMap fallback =
+          com.facebook.react.bridge.Arguments.createMap();
+      fallback.putNull("projectId");
+      fallback.putNull("deviceId");
+      fallback.putNull("userId");
+      callback.invoke(fallback);
     }
   }
 

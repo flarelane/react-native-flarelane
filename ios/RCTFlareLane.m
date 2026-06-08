@@ -28,6 +28,12 @@ RCT_EXTERN_METHOD(setTags:
                     (NSDictionary)tags
 )
 
+RCT_EXTERN_METHOD(setUserAttributes:
+                    (NSDictionary)attributes
+)
+
+RCT_EXTERN_METHOD(_webViewSyncPayload: (RCTResponseSenderBlock *)successCallback)
+
 RCT_EXTERN_METHOD(subscribe:
                     (BOOL)fallbackToSettings
                     successCallback: (RCTResponseSenderBlock *)successCallback
