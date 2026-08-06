@@ -44,7 +44,7 @@ public class FlareLaneModule extends ReactContextBaseJavaModule {
     super(reactContext);
     mReactApplicationContext = reactContext;
     FlareLane.SdkInfo.type = SdkType.REACTNATIVE;
-    FlareLane.SdkInfo.version = "1.10.1";
+    FlareLane.SdkInfo.version = "1.10.2";
   }
 
   @Override

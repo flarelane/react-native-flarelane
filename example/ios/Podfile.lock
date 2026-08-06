@@ -186,7 +186,7 @@ PODS:
     - React-cxxreact (= 0.63.5)
     - React-jsi (= 0.63.5)
   - React-jsinspector (0.63.5)
-  - react-native-flarelane (1.10.1):
+  - react-native-flarelane (1.10.2):
     - FlareLane (= 1.10.2)
     - React-Core
   - react-native-webview (11.26.1):
@@ -367,7 +367,7 @@ SPEC CHECKSUMS:
   React-jsi: 088577978e32b2229862d2e4eceace32613728b3
   React-jsiexecutor: 9c6608c65b353675bc7102f0bb79219f2b95bff0
   React-jsinspector: fdbc08866b34ae8e1b788ea1cbd9f9d1ca2aa3d6
-  react-native-flarelane: 81bee29b3e7790723bf077baa2ec0eab7b3f2752
+  react-native-flarelane: 6cc6d82265c111d637a67bcbcfa88653cba5e23f
   react-native-webview: ec195db71ebf55705d7b46a7da5f1b1746bb7efd
   React-RCTActionSheet: e911b99f0d6fa7711ffc2f62d236b12a32771835
   React-RCTAnimation: ad8b853170a059faf31d6add34f67d22391bbe01
