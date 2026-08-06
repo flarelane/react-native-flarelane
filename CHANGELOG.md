@@ -1,3 +1,8 @@
+## 1.10.1
+
+- Bump native dependencies to FlareLane Android SDK 1.10.1 / iOS SDK 1.10.2 (in-app message callback reliability fixes).
+- Declare `react-native-webview` as an optional peer dependency.
+
 ## 1.10.0
 
 - Add `setUserAttributes` public method.
