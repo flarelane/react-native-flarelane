@@ -67,4 +67,30 @@ describe('convertLogLevel', () => {
 
     error.mockRestore();
   });
+
+  // Regression: `in` also accepts inherited keys, so 'constructor' returned a
+  // function instead of a wire value.
+  it('treats inherited object keys as unknown levels', () => {
+    const error = jest.spyOn(console, 'error').mockImplementation(() => {});
+
+    expect(convertLogLevel('constructor' as any)).toBe(logLevelValue.verbose);
+
+    error.mockRestore();
+  });
+});
+
+describe('Logger.setLevel', () => {
+  afterEach(() => Logger.setLevel('verbose'));
+
+  // Regression: an unmapped level stored as-is silenced every JS log while
+  // native fell back to verbose.
+  it('normalizes an unknown level to verbose instead of going silent', () => {
+    const log = jest.spyOn(console, 'log').mockImplementation(() => {});
+
+    Logger.setLevel('loud' as any);
+    Logger.verbose('still audible');
+
+    expect(log).toHaveBeenCalledWith('[FlareLane][VERBOSE] still audible');
+    log.mockRestore();
+  });
 });

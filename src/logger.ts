@@ -17,7 +17,12 @@ class Logger {
   private static level: LogLevel = 'verbose';
 
   static setLevel(level: LogLevel) {
-    Logger.level = level;
+    // Own-property check with a verbose fallback: plain-JS callers can pass any string,
+    // and an unmapped level must not silently disable JS logs while native falls back
+    // to verbose.
+    Logger.level = Object.prototype.hasOwnProperty.call(logLevelValue, level)
+      ? level
+      : 'verbose';
   }
 
   static verbose(message: string) {

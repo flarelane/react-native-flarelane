@@ -83,7 +83,9 @@ export const isPlainObject = (o: any, method: string): boolean => {
 export const convertLogLevel = (logLevel: LogLevel) => {
   // Membership check, not a falsy check: `none` is 0, so `logLevelValue[logLevel] || fallback`
   // used to silently turn `none` into verbose.
-  if (logLevel in logLevelValue) return logLevelValue[logLevel];
+  // Own-property check: `in` also accepts inherited keys like 'constructor'.
+  if (Object.prototype.hasOwnProperty.call(logLevelValue, logLevel))
+    return logLevelValue[logLevel];
 
   Logger.error(
     `Cannot set ${logLevel} in setLogLevel. Please set one of none, error, verbose.`
