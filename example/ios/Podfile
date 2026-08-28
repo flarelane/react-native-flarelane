@@ -13,5 +13,22 @@ target 'FlareLaneExample' do
 end
 
 target 'FlareLaneNotificationServiceExtension' do
-  pod 'FlareLane', '1.10.2'
+  pod 'FlareLane', '1.11.2'
+end
+
+# RN 0.63's Yoga spells literal operators with a space (`operator" " _pt`), which new
+# clang rejects under -Werror. Example-only workaround; no SDK impact.
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    if target.name == 'Yoga'
+      target.build_configurations.each do |config|
+        config.build_settings['OTHER_CPLUSPLUSFLAGS'] = '$(inherited) -Wno-deprecated-literal-operator -Wno-bitwise-instead-of-logical'
+      end
+      # Yoga's podspec passes -Werror per file, which re-promotes the warnings above.
+      target.source_build_phase.files.each do |file|
+        flags = file.settings && file.settings['COMPILER_FLAGS']
+        file.settings['COMPILER_FLAGS'] = flags.gsub('-Werror', '') if flags
+      end
+    end
+  end
 end

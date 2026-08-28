@@ -1,13 +1,9 @@
-export const iOSLogLevel = {
+// SDK-wide log level values, identical on every platform. The native plugins map this to
+// whatever their platform API expects, so JS keeps a single table.
+export const logLevelValue = {
   none: 0,
   error: 1,
   verbose: 5,
-};
-
-export const androidLogLevel = {
-  none: 10,
-  error: 6,
-  verbose: 2,
 };
 
 export const events = {
