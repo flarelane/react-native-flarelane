@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* FlareLaneExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* FlareLaneExampleTests.m */; };
-		04F7C4842BBAC89100C75602 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 008F07F21AC5B25A0029DE68 /* main.jsbundle */; };
 		04F950E328056E290091DA10 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F950E228056E290091DA10 /* NotificationService.swift */; };
 		04F950E728056E290091DA10 /* FlareLaneNotificationServiceExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 04F950E028056E290091DA10 /* FlareLaneNotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		11E92E2215E03B5A9AFBB069 /* Pods_FlareLaneNotificationServiceExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA06F39B2550A3523CD2344B /* Pods_FlareLaneNotificationServiceExtension.framework */; };
@@ -62,7 +61,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		00E356EE1AD99517003FC87E /* FlareLaneExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FlareLaneExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* FlareLaneExampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FlareLaneExampleTests.m; sourceTree = "<group>"; };
@@ -163,7 +161,6 @@
 			isa = PBXGroup;
 			children = (
 				4240BE1626FDC5140077B6FE /* FlareLaneExample.entitlements */,
-				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -405,7 +402,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				04F7C4842BBAC89100C75602 /* main.jsbundle in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 			);
@@ -441,7 +437,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
+			shellScript = "export NODE_BINARY=node\n# The example entry is index.tsx; the RN script defaults to index.js and fails without this.\nexport ENTRY_FILE=index.tsx\n# Xcode script phases do not inherit the shell PATH (node lives in homebrew), and\n# metro on RN 0.63 needs the legacy OpenSSL provider on Node 17+ \u2014 without these\n# the phase used to fail or skip silently and a stale checked-in bundle shipped.\nexport PATH=\"/opt/homebrew/bin:$PATH\"\nexport NODE_OPTIONS=--openssl-legacy-provider\n../node_modules/react-native/scripts/react-native-xcode.sh";
 		};
 		2D02E4CB1E0B4B27006451C7 /* Bundle React Native Code And Images */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -455,7 +451,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
+			shellScript = "export NODE_BINARY=node\n# The example entry is index.tsx; the RN script defaults to index.js and fails without this.\nexport ENTRY_FILE=index.tsx\n# Xcode script phases do not inherit the shell PATH (node lives in homebrew), and\n# metro on RN 0.63 needs the legacy OpenSSL provider on Node 17+ \u2014 without these\n# the phase used to fail or skip silently and a stale checked-in bundle shipped.\nexport PATH=\"/opt/homebrew/bin:$PATH\"\nexport NODE_OPTIONS=--openssl-legacy-provider\n../node_modules/react-native/scripts/react-native-xcode.sh";
 		};
 		4F0A6FC082772762E3E4C96C /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;

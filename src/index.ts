@@ -1,5 +1,6 @@
 import { NativeModules } from 'react-native';
 import FlareLaneEventManager from './eventManager';
+import Logger from './logger';
 import { NotificationReceivedEvent } from './notificationReceivedEvent';
 import type {
   EventData,
@@ -37,7 +38,10 @@ class FlareLane {
     if (!isString(logLevel, this.name)) return;
 
     try {
-      console.log(`FlareLane - Set log level [${logLevel}]`);
+      // Apply on the JS side first: the bridge hop is async, so anything logged in between
+      // would otherwise still use the previous level.
+      Logger.setLevel(logLevel);
+      Logger.verbose(`Set log level [${logLevel}]`);
       FlareLaneNativeModule.setLogLevel(convertLogLevel(logLevel));
     } catch (error: any) {
       publicMethodErrorHandler(error, this.name);
@@ -51,7 +55,7 @@ class FlareLane {
     if (!isString(projectId, this.name)) return;
 
     try {
-      console.log(`FlareLane - Initiallize with project id. [${projectId}]`);
+      Logger.verbose(`Initiallize with project id. [${projectId}]`);
       FlareLaneNativeModule.initialize(projectId, requestPermissionOnLaunch);
     } catch (error: any) {
       publicMethodErrorHandler(error, this.name);
@@ -66,9 +70,7 @@ class FlareLane {
     try {
       eventManager.setNotificationClickedHandler(callback);
       FlareLaneNativeModule.setNotificationClickedHandler();
-      console.log(
-        `FlareLane - NotificationClickedHandler has been registered.`
-      );
+      Logger.verbose(`NotificationClickedHandler has been registered.`);
     } catch (error: any) {
       publicMethodErrorHandler(error, this.name);
     }
@@ -88,8 +90,8 @@ class FlareLane {
         callback(event);
       });
       FlareLaneNativeModule.setNotificationForegroundReceivedHandler();
-      console.log(
-        `FlareLane - NotificationForegroundReceivedHandler has been registered.`
+      Logger.verbose(
+        `NotificationForegroundReceivedHandler has been registered.`
       );
     } catch (error: any) {
       publicMethodErrorHandler(error, this.name);
@@ -102,7 +104,7 @@ class FlareLane {
     if (!isString(userId, this.name, true)) return;
 
     try {
-      console.log(`FlareLane - Set user id: ${userId}`);
+      Logger.verbose(`Set user id: ${userId}`);
       FlareLaneNativeModule.setUserId(userId);
     } catch (error: any) {
       publicMethodErrorHandler(error, this.name);
@@ -113,7 +115,7 @@ class FlareLane {
     if (!isPlainObject(tags, this.name)) return;
 
     try {
-      console.log(`FlareLane - Set tags: ${JSON.stringify(tags)}`);
+      Logger.verbose(`Set tags: ${JSON.stringify(tags)}`);
       FlareLaneNativeModule.setTags(tags);
     } catch (error: any) {
       publicMethodErrorHandler(error, this.name);
@@ -128,9 +130,7 @@ class FlareLane {
     if (!isPlainObject(attributes, this.name)) return;
 
     try {
-      console.log(
-        `FlareLane - Set user attributes: ${JSON.stringify(attributes)}`
-      );
+      Logger.verbose(`Set user attributes: ${JSON.stringify(attributes)}`);
       FlareLaneNativeModule.setUserAttributes(attributes);
     } catch (error: any) {
       publicMethodErrorHandler(error, this.name);
@@ -145,7 +145,7 @@ class FlareLane {
     if (callback && !isValidCallback(callback, this.name)) return;
 
     try {
-      console.log(`FlareLane - Subscribe`);
+      Logger.verbose(`Subscribe`);
       FlareLaneNativeModule.subscribe(
         fallbackToSettings,
         (_isSubscribed: boolean) => {
@@ -161,7 +161,7 @@ class FlareLane {
     if (callback && !isValidCallback(callback, this.name)) return;
 
     try {
-      console.log(`FlareLane - Unsubscribe`);
+      Logger.verbose(`Unsubscribe`);
       FlareLaneNativeModule.unsubscribe((_isSubscribed: boolean) => {
         if (callback) callback(_isSubscribed);
       });
@@ -174,7 +174,7 @@ class FlareLane {
     if (!isValidCallback(callback, this.name)) return;
 
     try {
-      console.log(`FlareLane - IsSubscribed`);
+      Logger.verbose(`IsSubscribed`);
       FlareLaneNativeModule.isSubscribed(callback);
     } catch (error: any) {
       publicMethodErrorHandler(error, this.name);
@@ -186,7 +186,7 @@ class FlareLane {
       if (!isString(type, this.name)) return;
       if (data && !isPlainObject(data, this.name)) return;
 
-      console.log(`FlareLane - Track Event ${JSON.stringify({ type, data })}`);
+      Logger.verbose(`Track Event ${JSON.stringify({ type, data })}`);
       FlareLaneNativeModule.trackEvent(type, data || null);
     } catch (error: any) {
       publicMethodErrorHandler(error, this.name);
@@ -209,7 +209,9 @@ class FlareLane {
     if (!isString(group, this.name, true)) return;
 
     try {
-      console.log(`FlareLane - displayInApp`, { group, data: data ?? null });
+      Logger.verbose(
+        `displayInApp ${JSON.stringify({ group, data: data ?? null })}`
+      );
       FlareLaneNativeModule.displayInApp(group, data ?? null);
     } catch (error: any) {
       publicMethodErrorHandler(error, this.name);
@@ -222,9 +224,7 @@ class FlareLane {
     try {
       eventManager.setInAppMessageActionHandler(callback);
       FlareLaneNativeModule.setInAppMessageActionHandler();
-      console.log(
-        `FlareLane - setInAppMessageActionHandler has been registered.`
-      );
+      Logger.verbose(`setInAppMessageActionHandler has been registered.`);
     } catch (error: any) {
       publicMethodErrorHandler(error, this.name);
     }

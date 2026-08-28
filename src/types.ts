@@ -8,6 +8,12 @@ export interface NotificationButton {
   link?: string;
 }
 
+/** Chat-style (communication notification) sender attached to a push. */
+export interface NotificationCommunication {
+  senderName: string;
+  senderImageUrl: string;
+}
+
 /** Read-only shape of a notification surfaced to JS. Every field is populated from the
  *  native bridge — JS never derives values (e.g. `clickedButton` from `clickedButtonIndex`).
  *  Native (Android/iOS) is the single source of truth for click semantics; this layer just
@@ -20,6 +26,11 @@ export interface Notification {
   imageUrl?: string;
   data?: Record<string, any>;
   buttons?: NotificationButton[];
+  /** Notification grouping key (iOS thread-id / Android group). Present when the push was
+   *  sent with `threadId`. */
+  threadId?: string;
+  /** Chat-style sender info, present when the push was sent as a communication notification. */
+  communication?: NotificationCommunication;
   /** Index of the tapped action button, or `null`/`undefined` for a body click. Doubles as
    *  the "was it a button click?" check via `notification.clickedButtonIndex != null`. */
   clickedButtonIndex?: number | null;

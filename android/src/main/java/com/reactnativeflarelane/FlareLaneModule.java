@@ -44,7 +44,7 @@ public class FlareLaneModule extends ReactContextBaseJavaModule {
     super(reactContext);
     mReactApplicationContext = reactContext;
     FlareLane.SdkInfo.type = SdkType.REACTNATIVE;
-    FlareLane.SdkInfo.version = "1.10.3";
+    FlareLane.SdkInfo.version = "1.11.2";
   }
 
   @Override
@@ -73,8 +73,17 @@ public class FlareLaneModule extends ReactContextBaseJavaModule {
 
   @ReactMethod
   public void setLogLevel(double logLevel) {
-    int intLogLevel = (int) logLevel;
-    FlareLane.setLogLevel(intLogLevel);
+    FlareLane.setLogLevel(toAndroidLogLevel((int) logLevel));
+  }
+
+  /**
+   * Maps the SDK-wide log level (none=0, error=1, verbose=5 — identical on every platform) to
+   * the android.util.Log scale the Android SDK's public API takes.
+   */
+  private static int toAndroidLogLevel(int level) {
+    if (level >= 5) return FlareLane.LOG_LEVEL_VERBOSE;
+    if (level >= 1) return FlareLane.LOG_LEVEL_ERROR;
+    return FlareLane.LOG_LEVEL_NONE;
   }
 
   // ----- EVENT HANDLERS -----

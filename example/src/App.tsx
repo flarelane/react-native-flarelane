@@ -13,12 +13,9 @@ export default function App() {
   const [isSetTags, setIsSetTags] = React.useState<boolean>(false);
   const [isSetUserAttributes, setIsSetUserAttributes] =
     React.useState<boolean>(false);
-  const [isSubscribedState, setIsSubscribedState] =
-    React.useState<boolean>(false);
   const [showWebViewDemo, setShowWebViewDemo] = React.useState<boolean>(false);
 
   React.useEffect(() => {
-    let mounted = true;
     FlareLane.setNotificationClickedHandler((noti) => {
       const text = `Notification Clicked: ${JSON.stringify(noti)}`;
       setText(text); // Example code
@@ -47,18 +44,6 @@ export default function App() {
       console.log(text);
     });
 
-    FlareLane.displayInApp('home');
-
-    // Sync initial subscribe-toggle label with the actual SDK state so the
-    // first tap doesn't appear inverted (e.g. already-subscribed device showing
-    // "set"). isSubscribed is one-shot; the toggle handlers keep it in sync
-    // after that.
-    FlareLane.isSubscribed((subscribed) => {
-      if (mounted) setIsSubscribedState(subscribed);
-    });
-    return () => {
-      mounted = false;
-    };
   }, []);
 
   const toggleUserId = () => {
@@ -84,19 +69,16 @@ export default function App() {
     FlareLane.trackEvent('test_event', { react: 'native' });
   };
 
-  // Single toggle: tap when label says (true) → subscribe; (false) → unsubscribe.
-  const toggleSubscribe = () => {
-    if (!isSubscribedState) {
-      FlareLane.subscribe(true, (subscribed) => {
-        console.log('subscribe ->', subscribed);
-        setIsSubscribedState(subscribed);
-      });
-    } else {
-      FlareLane.unsubscribe((subscribed) => {
-        console.log('unsubscribe ->', subscribed);
-        setIsSubscribedState(subscribed);
-      });
-    }
+  const subscribe = () => {
+    FlareLane.subscribe(true, (subscribed) => {
+      console.log('subscribe ->', subscribed);
+    });
+  };
+
+  const unsubscribe = () => {
+    FlareLane.unsubscribe((subscribed) => {
+      console.log('unsubscribe ->', subscribed);
+    });
   };
 
   const isSubscribedFunc = () => {
@@ -160,10 +142,8 @@ export default function App() {
           isSetUserAttributes ? 'del' : 'set'
         })`}
       />
-      <Button
-        onPress={toggleSubscribe}
-        title={`TOGGLE SUBSCRIBE (${isSubscribedState ? 'del' : 'set'})`}
-      />
+      <Button onPress={subscribe} title="SUBSCRIBE" />
+      <Button onPress={unsubscribe} title="UNSUBSCRIBE" />
       <Button onPress={getDeviceId} title="GET DEVICE ID" />
       <Button onPress={trackEvent} title="TRACK EVENT" />
       <Button onPress={isSubscribedFunc} title="ISSUBSCRIBED" />

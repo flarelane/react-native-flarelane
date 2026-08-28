@@ -1,4 +1,5 @@
 import { NativeModules, Platform } from 'react-native';
+import Logger from '../logger';
 import FlareLane from '../index';
 import type { FlareLaneType, WebViewSyncPayload } from '../types';
 
@@ -70,7 +71,7 @@ async function _buildSyncDeviceDataCallback(): Promise<string | null> {
     };
     return `FlareLane.syncDeviceDataCallback(${JSON.stringify(out)});`;
   } catch (e) {
-    console.log(`[FlareLane] _webViewSyncPayload failed: ${e}`);
+    Logger.error(`_webViewSyncPayload failed: ${e}`);
     return null;
   }
 }
@@ -88,18 +89,18 @@ async function _handle(message: string): Promise<string | null> {
         typeof parsed !== 'object' ||
         Array.isArray(parsed)
       ) {
-        console.log('[FlareLane] WebView bridge ignored non-object message');
+        Logger.verbose('WebView bridge ignored non-object message');
         return null;
       }
       body = parsed as Record<string, any>;
     } catch (e) {
-      console.log('[FlareLane] WebView bridge JSON parse failed');
+      Logger.verbose('WebView bridge JSON parse failed');
       return null;
     }
 
     const method = typeof body.method === 'string' ? body.method : null;
     if (!method) {
-      console.log('[FlareLane] WebView bridge message missing "method"');
+      Logger.verbose('WebView bridge message missing "method"');
       return null;
     }
 
@@ -124,7 +125,7 @@ async function _handle(message: string): Promise<string | null> {
         return null;
       case 'trackEvent':
         if (typeof body.type !== 'string') {
-          console.log('[FlareLane] trackEvent missing "type"');
+          Logger.verbose('trackEvent missing "type"');
           return null;
         }
         FlareLane.trackEvent(
@@ -148,11 +149,11 @@ async function _handle(message: string): Promise<string | null> {
         }
         return null;
       default:
-        console.log(`[FlareLane] WebView bridge unknown method: ${method}`);
+        Logger.verbose(`WebView bridge unknown method: ${method}`);
         return null;
     }
   } catch (e) {
-    console.log(`[FlareLane] WebView bridge handle failed: ${e}`);
+    Logger.error(`WebView bridge handle failed: ${e}`);
     return null;
   }
 }
