@@ -13,7 +13,7 @@ target 'FlareLaneExample' do
 end
 
 target 'FlareLaneNotificationServiceExtension' do
-  pod 'FlareLane', '1.11.2'
+  pod 'FlareLane', '1.11.3'
 end
 
 # RN 0.63's Yoga spells literal operators with a space (`operator" " _pt`), which new
