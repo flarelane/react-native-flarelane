@@ -23,11 +23,12 @@ class RCTFlareLane: RCTEventEmitter {
     FlareLane.setLogLevel(level: level)
   }
 
-  @objc(initialize:requestPermissionOnLaunch:)
-  func initialize(projectId: String, requestPermissionOnLaunch: Bool) {
+  @objc(initialize:requestPermissionOnLaunch:region:)
+  func initialize(projectId: String, requestPermissionOnLaunch: Bool, region: String?) {
     DispatchQueue.main.async {
       let launchOptions = self.bridge.launchOptions as? [UIApplication.LaunchOptionsKey: Any]
-      FlareLane.initWithLaunchOptions(launchOptions, projectId: projectId, requestPermissionOnLaunch: requestPermissionOnLaunch)
+      // nil region means "us" in the native SDK, same as the overload without region.
+      FlareLane.initWithLaunchOptions(launchOptions, projectId: projectId, region: region, requestPermissionOnLaunch: requestPermissionOnLaunch)
     }
   }
 
@@ -98,7 +99,8 @@ class RCTFlareLane: RCTEventEmitter {
     let payload: [String: Any] = [
       "projectId": FlareLane.getProjectId() as Any,
       "deviceId": FlareLane.getDeviceId() as Any,
-      "userId": FlareLane.getUserId() as Any
+      "userId": FlareLane.getUserId() as Any,
+      "region": FlareLane.getRegion() as Any
     ]
     successCallback([payload])
   }
