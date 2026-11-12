@@ -8,6 +8,20 @@ Welcome to [FlareLane](https://flarelane.com)!
 npm install @flarelane/react-native-sdk
 ```
 
+## Region
+
+`FlareLane.initialize(projectId, requestPermissionOnLaunch = true, region?)`
+
+Projects live in one region. Omit `region` for the default `"us"`; projects
+created in the Seoul region pass `"kr"`:
+
+```ts
+FlareLane.initialize('YOUR_PROJECT_ID', true, 'kr');
+```
+
+The native SDK validates the value: a malformed region logs an error and
+stops initialization instead of falling back to `"us"`.
+
 ## WebView Bridge (hybrid apps)
 
 For apps that embed pages running the FlareLane Web SDK, the native SDK

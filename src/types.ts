@@ -60,11 +60,16 @@ export interface WebViewSyncPayload {
   projectId: string | null;
   deviceId: string | null;
   userId: string | null;
+  region: string | null;
 }
 
 export interface FlareLaneType {
   setLogLevel(level: number): void;
-  initialize(projectId: string, requestPermissionOnLaunch?: boolean): void;
+  initialize(
+    projectId: string,
+    requestPermissionOnLaunch: boolean,
+    region: string | null
+  ): void;
   setNotificationClickedHandler: () => void;
   setNotificationForegroundReceivedHandler: () => void;
   setInAppMessageActionHandler: () => void;

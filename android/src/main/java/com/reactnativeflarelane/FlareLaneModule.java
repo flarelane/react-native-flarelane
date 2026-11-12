@@ -44,7 +44,7 @@ public class FlareLaneModule extends ReactContextBaseJavaModule {
     super(reactContext);
     mReactApplicationContext = reactContext;
     FlareLane.SdkInfo.type = SdkType.REACTNATIVE;
-    FlareLane.SdkInfo.version = "1.11.2";
+    FlareLane.SdkInfo.version = "1.12.0";
   }
 
   @Override
@@ -62,10 +62,11 @@ public class FlareLaneModule extends ReactContextBaseJavaModule {
   // ----- PUBLIC METHOD -----
 
   @ReactMethod
-  public void initialize(String projectId, boolean requestPermissionOnLaunch) {
+  public void initialize(String projectId, boolean requestPermissionOnLaunch, @Nullable String region) {
     try {
       context = mReactApplicationContext.getApplicationContext();
-      FlareLane.initWithContext(context, projectId, requestPermissionOnLaunch);
+      // A null region means "us" in the native SDK, same as the overload without region.
+      FlareLane.initWithContext(context, projectId, region, requestPermissionOnLaunch);
     } catch (Exception e) {
       Log.e("FlareLane", Log.getStackTraceString(e));
     }
@@ -161,6 +162,7 @@ public class FlareLaneModule extends ReactContextBaseJavaModule {
       payload.putString("projectId", FlareLane.getProjectId(context));
       payload.putString("deviceId", FlareLane.getDeviceId(context));
       payload.putString("userId", FlareLane.getUserId(context));
+      payload.putString("region", FlareLane.getRegion(context));
       callback.invoke(payload);
     } catch (Exception e) {
       Log.e("FlareLane", Log.getStackTraceString(e));
@@ -172,6 +174,7 @@ public class FlareLaneModule extends ReactContextBaseJavaModule {
       fallback.putNull("projectId");
       fallback.putNull("deviceId");
       fallback.putNull("userId");
+      fallback.putNull("region");
       callback.invoke(fallback);
     }
   }

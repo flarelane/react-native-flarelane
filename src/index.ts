@@ -48,15 +48,25 @@ class FlareLane {
     }
   }
 
+  /**
+   * @param region Region the project lives in. Omit for "us" (default); projects created in the
+   * Seoul region pass "kr". The native SDK validates it, and a malformed value stops initialization.
+   */
   static initialize(
     projectId: string,
-    requestPermissionOnLaunch: boolean = true
+    requestPermissionOnLaunch: boolean = true,
+    region?: string | null
   ) {
     if (!isString(projectId, this.name)) return;
+    if (region != null && !isString(region, this.name)) return;
 
     try {
       Logger.verbose(`Initiallize with project id. [${projectId}]`);
-      FlareLaneNativeModule.initialize(projectId, requestPermissionOnLaunch);
+      FlareLaneNativeModule.initialize(
+        projectId,
+        requestPermissionOnLaunch,
+        region ?? null
+      );
     } catch (error: any) {
       publicMethodErrorHandler(error, this.name);
     }

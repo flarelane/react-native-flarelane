@@ -10,6 +10,7 @@ RCT_EXTERN_METHOD(setLogLevel:
 RCT_EXTERN_METHOD(initialize:
                     (NSString)projectId
                     requestPermissionOnLaunch: (BOOL)requestPermissionOnLaunch
+                    region: (NSString)region
 )
 
 RCT_EXTERN_METHOD(setNotificationClickedHandler)

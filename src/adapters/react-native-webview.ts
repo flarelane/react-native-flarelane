@@ -67,6 +67,8 @@ async function _buildSyncDeviceDataCallback(): Promise<string | null> {
       projectId: payload?.projectId ?? null,
       deviceId: payload?.deviceId ?? null,
       userId: payload?.userId ?? null,
+      // The Web SDK reads this to pick the API host for in-app fetches; absent/null means "us".
+      region: payload?.region ?? null,
       platform: Platform.OS === 'ios' ? 'ios' : 'android',
     };
     return `FlareLane.syncDeviceDataCallback(${JSON.stringify(out)});`;

@@ -31,8 +31,9 @@ jest.mock('react-native', () => {
           projectId: string | null;
           deviceId: string | null;
           userId: string | null;
+          region: string | null;
         }) => void
-      ) => cb({ projectId: 'P', deviceId: 'D', userId: 'U' })
+      ) => cb({ projectId: 'P', deviceId: 'D', userId: 'U', region: 'kr' })
     ),
   };
   return {
@@ -88,6 +89,36 @@ describe('FlareLaneJavascriptInterface (react-native-webview adapter)', () => {
     expect(injectJavaScript).toHaveBeenCalledTimes(1);
     const js = injectJavaScript.mock.calls[0][0] as string;
     expect(js.startsWith('FlareLane.syncDeviceDataCallback(')).toBe(true);
+  });
+
+  it('syncDeviceData response carries the native region, and null when native sends none', async () => {
+    const injectJavaScript = jest.fn();
+    const handler = FlareLaneJavascriptInterface.onMessage({
+      current: { injectJavaScript },
+    });
+    const message = {
+      nativeEvent: { data: JSON.stringify({ method: 'syncDeviceData' }) },
+    };
+    const parse = (js: string) =>
+      JSON.parse(
+        js.slice('FlareLane.syncDeviceDataCallback('.length, -');'.length)
+      );
+
+    await handler(message);
+    expect(parse(injectJavaScript.mock.calls[0][0])).toEqual({
+      projectId: 'P',
+      deviceId: 'D',
+      userId: 'U',
+      region: 'kr',
+      platform: 'ios',
+    });
+
+    mockFlareLane._webViewSyncPayload.mockImplementationOnce(
+      (cb: (p: Record<string, string | null>) => void) =>
+        cb({ projectId: 'P', deviceId: 'D', userId: 'U' })
+    );
+    await handler(message);
+    expect(parse(injectJavaScript.mock.calls[1][0]).region).toBeNull();
   });
 
   it('onMessage(ref) forwards setUserId to the SDK and does not call injectJavaScript', async () => {
