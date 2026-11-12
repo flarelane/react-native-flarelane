@@ -50,7 +50,7 @@ class FlareLane {
 
   /**
    * @param region Region the project lives in. Omit for "us" (default); projects created in the
-   * Seoul region pass "kr". The native SDK validates it — a malformed value stops initialization.
+   * Seoul region pass "kr". The native SDK validates it, and a malformed value stops initialization.
    */
   static initialize(
     projectId: string,

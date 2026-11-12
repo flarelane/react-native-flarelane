@@ -19,7 +19,7 @@ created in the Seoul region pass `"kr"`:
 FlareLane.initialize('YOUR_PROJECT_ID', true, 'kr');
 ```
 
-The native SDK validates the value — a malformed region logs an error and
+The native SDK validates the value: a malformed region logs an error and
 stops initialization instead of falling back to `"us"`.
 
 ## WebView Bridge (hybrid apps)

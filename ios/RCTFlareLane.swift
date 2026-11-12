@@ -12,7 +12,7 @@ class RCTFlareLane: RCTEventEmitter {
   override init() {
     super.init()
     RCTFlareLane.emitter = self
-    FlareLane.setSdkInfo(sdkType: .reactnative, sdkVersion: "1.11.3")
+    FlareLane.setSdkInfo(sdkType: .reactnative, sdkVersion: "1.12.0")
   }
 
   // ----- PUBLIC METHODS -----
